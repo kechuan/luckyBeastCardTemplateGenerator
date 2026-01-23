@@ -1,0 +1,33 @@
+{	
+
+	"appTitle": "Lucky Beasts Card Template Generator",
+	"settingPanel":"Setting Panel",
+	"navigation": "Navigation",
+	"imageImport": "Image Import",
+	
+	"cardPropPanel": "Card Properties Panel",
+
+		"basicProp": "Basic Properties",
+			"cardName":"Card Name",
+			"cardRarity": "Card Rarity",
+			"cardIllustration": "Illustration",
+
+		"seasonElementSelect": "Season ElementSelect",
+			"cardCost": "Card Cost",
+			"seasonElementRequirement":"Season Element Requirement",
+			
+
+		"cardDetail": "Card Detail",
+			"cardType": "Card Type",
+			"cardDescription": "Card Description",
+			"cardKeyWordSetting": "Card KeyWord Setting",
+			"cardTagSetting": "Card Tag Setting",
+			
+
+		
+
+	
+
+	
+
+}
