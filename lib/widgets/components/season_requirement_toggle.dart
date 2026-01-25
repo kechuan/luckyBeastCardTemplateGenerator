@@ -27,6 +27,10 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
 
       manaTextEditingControllers = TextEditingController(text: cardModel.cardDetails.cost.toString());
 
+      manaTextEditingControllers.addListener((){
+        cardModel.updateCost = int.tryParse(manaTextEditingControllers.text) ?? 0;
+      });
+
       elementsTextEditingControllers = List.generate(SeasonType.values.length, (index) {
           return TextEditingController(
             text: cardModel.cardDetails.seasonRequirement[index].toString()
@@ -41,7 +45,7 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
   Widget build(BuildContext context) {
     return Expander(
       initiallyExpanded: true,
-      header: Text(t.seasonElementRequirement),
+      header: Text(t.cardPropPanel.seasonElementSelect.seasonElementRequirement),
       content: Column(
         spacing: 12,
         children: [
@@ -53,26 +57,26 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
             children: [
 
               Image.asset(
-                convertCardTypeImageUrl(null),
+                convertElementTypeImageUrl(),
                 scale: 2,
               ),
 
               ValueListenableBuilder(
-				valueListenable: manaTextEditingControllers,
-				builder: (_, manaText, _) {
-				  return Flexible(
-					child: Slider(
-					  min: 0,
-					  max: 20,
-					  value: (double.tryParse(manaText.text) ?? 0).clamp(0, 20),
-					  onChanged: (value) {
-						manaTextEditingControllers.text = value.toStringAsFixed(0);
-					  },
-				  
-					),
-				  );
-				}
-			  ),
+                valueListenable: manaTextEditingControllers,
+                builder: (_, manaText, _) {
+                  return Flexible(
+                    child: Slider(
+                      min: 0,
+                      max: 20,
+                      value: (double.tryParse(manaText.text) ?? 0).clamp(0, 20),
+                      onChanged: (value) {
+                        manaTextEditingControllers.text = value.toStringAsFixed(0);
+                      },
+
+                    ),
+                  );
+                }
+              ),
 
               GeneralNumberInputBox(textEditingController: manaTextEditingControllers)
             ],
@@ -96,7 +100,7 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
                   children: [
 
                     Image.asset(
-                      convertCardTypeImageUrl(SeasonType.values[index]),
+                      convertElementTypeImageUrl(seasonType: SeasonType.values[index]),
                       scale: 2,
                     ),
 

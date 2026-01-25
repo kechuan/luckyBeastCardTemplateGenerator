@@ -17,6 +17,7 @@ dependencies:
   slang: ^4.12.0
   slang_flutter: ^4.12.0
   provider: ^6.1.5+1
+  equatable: ^2.0.8
 
 
 dev_dependencies:
@@ -37,4 +38,5 @@ flutter:
     - assets/offical_card_template/construction_card/
     - assets/offical_card_template/minion_card/
     - assets/offical_card_template/spell_card/
+    - assets/custom_card_template/
 

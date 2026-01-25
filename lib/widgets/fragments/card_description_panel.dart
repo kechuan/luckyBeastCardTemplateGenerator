@@ -40,7 +40,7 @@ class _CardDescriptionPanelState extends State<CardDescriptionPanel> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(t.cardDescription),
+            Text(t.cardPropPanel.cardDetail.cardDescription),
 
             Button(
               child: Text("更新"),

@@ -1,0 +1,31 @@
+extension ImmutableCollectionExtension<E> on Iterable<E> {
+  List<E> copyWithAdd(E element, {int? index}) {
+    final list = toList(); // 拷贝原集合
+    if (index != null) {
+      list.insert(index, element);
+    } else {
+      list.add(element);
+    }
+    return list;
+  }
+
+  List<E> copyWithRemove({E? element, int? index}) {
+    final list = toList(); // 拷贝原集合
+    if (index != null) {
+      if (index >= 0 && index < list.length) {
+        list.removeAt(index);
+      }
+    } else if (element != null) {
+      list.remove(element);
+    }
+    return list;
+  }
+
+  List<E> copyWithReplace(int index, E newElement) {
+    final list = toList();
+    if (index >= 0 && index < list.length) {
+      list[index] = newElement;
+    }
+    return list;
+  }
+}

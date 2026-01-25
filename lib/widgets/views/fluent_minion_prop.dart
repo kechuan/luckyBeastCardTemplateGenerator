@@ -15,7 +15,6 @@ class _FluentCardMinionTypePropState extends State<FluentCardMinionTypeProp> {
 
   late TextEditingController attackTextEditingControllers;	
   late TextEditingController healthTextEditingControllers;
-  
 
   @override
   void initState() {
@@ -27,7 +26,7 @@ class _FluentCardMinionTypePropState extends State<FluentCardMinionTypeProp> {
       attackTextEditingControllers = TextEditingController(text: cardModel.cardDetails.attack.toString());
     }
 
-	super.initState();
+    super.initState();
 
   }
 
@@ -37,7 +36,7 @@ class _FluentCardMinionTypePropState extends State<FluentCardMinionTypeProp> {
       spacing: 12,
       children: [
 
-		Divider(),
+        Divider(),
 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,22 +45,28 @@ class _FluentCardMinionTypePropState extends State<FluentCardMinionTypeProp> {
             //Icon(Icons.room_service),
             Icon(FluentIcons.align_center),
             ValueListenableBuilder(
-			  valueListenable: attackTextEditingControllers,
-			  builder: (_, attackText, child) {
-				return Flexible(
-					child: Slider(
-						min: 0,
-						max: 20,
-						value: (double.tryParse(attackText.text) ?? 0).clamp(0, 20),
-						onChanged: (value) {
-							attackTextEditingControllers.text = value.toStringAsFixed(0);
-						}
-					)
-				);
-			  }
-			),
+              valueListenable: attackTextEditingControllers,
+              builder: (_, attackText, child) {
+                return Flexible(
+                  child: Slider(
+                    min: 0,
+                    max: 20,
+                    value: (double.tryParse(attackText.text) ?? 0).clamp(0, 20),
+                    onChanged: (value) {
+                      attackTextEditingControllers.text = value.toStringAsFixed(0);
+                      context.read<CardModel>().updateAttack = value.toInt();
+                      
+                    }
+                  )
+                );
+              }
+            ),
             GeneralNumberInputBox(
               textEditingController: attackTextEditingControllers,
+              onChanged: (value) {
+                context.read<CardModel>().updateAttack = int.tryParse(attackTextEditingControllers.text) ?? 0;
+              }
+              
             )
           ],
         ),
@@ -73,22 +78,26 @@ class _FluentCardMinionTypePropState extends State<FluentCardMinionTypeProp> {
             //Icon(Icons.room_service),
             Icon(FluentIcons.align_center),
             ValueListenableBuilder(
-			  valueListenable: healthTextEditingControllers,
-			  builder: (_, healthText, child) {
-				return Flexible(
-					child: Slider(
-						min: 0,
-						max: 20,
-						value: (double.tryParse(healthText.text) ?? 0).clamp(0, 20),
-						onChanged: (value) {
-							healthTextEditingControllers.text = value.toStringAsFixed(0);
-						}
-					)
-				);
-			  }
-			),
+              valueListenable: healthTextEditingControllers,
+              builder: (_, healthText, child) {
+                return Flexible(
+                  child: Slider(
+                    min: 0,
+                    max: 20,
+                    value: (double.tryParse(healthText.text) ?? 0).clamp(0, 20),
+                    onChanged: (value) {
+                      healthTextEditingControllers.text = value.toStringAsFixed(0);
+                      context.read<CardModel>().updateHealth = value.toInt();
+                    }
+                  )
+                );
+              }
+            ),
             GeneralNumberInputBox(
               textEditingController: healthTextEditingControllers,
+              onChanged: (value) {
+                context.read<CardModel>().updateHealth = int.tryParse(healthTextEditingControllers.text) ?? 0;
+              }
             )
           ],
         ),
@@ -102,10 +111,10 @@ class _FluentCardMinionTypePropState extends State<FluentCardMinionTypeProp> {
         //但是二创难说 因此需要自适应大小的FittedBox	
         Text("种族Tag设置:"),
 
-		SizedBox(
-			height: 100,
-			child: InherentKeywordPanel()
-		)
+        SizedBox(
+          height: 100,
+          child: InherentKeywordPanel()
+        )
 
       ],
     );

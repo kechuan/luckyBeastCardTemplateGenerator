@@ -4,6 +4,7 @@ import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/const.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_basic_information_panel.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_details_panel.dart';
+import 'package:lucky_beast_card_template_generator/widgets/components/card_overlay_positions_panel.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/season_requirement_toggle.dart';
 
 class FluentCardPropView extends StatelessWidget {
@@ -16,7 +17,7 @@ class FluentCardPropView extends StatelessWidget {
         child: ListView(
           //spacing: 12,
           children: [
-            Center(child: Text(t.cardPropPanel)),Padding(padding: PaddingV6),
+            Center(child: Text(t.cardPropPanel.name)),Padding(padding: PaddingV6),
       
             const CardBasicInformationPanel(),
       
@@ -26,7 +27,13 @@ class FluentCardPropView extends StatelessWidget {
       
             Divider(),Padding(padding: PaddingV6),
       
-            const CardDetailsPanel()
+            const CardDetailsPanel(),
+
+            Divider(),Padding(padding: PaddingV6),
+
+            const CardOverlayPositionsPanel(),
+
+
 
           ],
         ),

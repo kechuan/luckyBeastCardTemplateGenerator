@@ -5,29 +5,44 @@
 	"navigation": "Navigation",
 	"imageImport": "Image Import",
 	
-	"cardPropPanel": "Card Properties Panel",
+	"cardPropPanel":{
+		"name":	"Card Properties Panel",
 
-		"basicProp": "Basic Properties",
-			"cardName":"Card Name",
-			"cardRarity": "Card Rarity",
-			"cardIllustration": "Illustration",
-
-		"seasonElementSelect": "Season ElementSelect",
-			"cardCost": "Card Cost",
-			"seasonElementRequirement":"Season Element Requirement",
+		"basicProp": {
+			"name":"BasicProp",
 			
+			"cardName":"Card Name",
+			"cardRarity": {
+				"name":"cardRarity",
 
-		"cardDetail": "Card Detail",
+				"normal":"Normal",
+				"unusual":"Unusual",
+				"rare":"Rare",
+				"treasure":"Treasure"
+			},
+			"illustrationPath": "Illustration Path"
+			
+		},
+
+		"seasonElementSelect": {
+			"name":"Season ElementSelect",
+
+			"cardCost": "Card Cost",
+			"seasonElementRequirement":"Season Element Requirement"
+
+		},
+
+		"cardDetail": {
+			"name":"Card Detail",
+
 			"cardType": "Card Type",
 			"cardDescription": "Card Description",
 			"cardKeyWordSetting": "Card KeyWord Setting",
-			"cardTagSetting": "Card Tag Setting",
-			
+			"cardTagSetting": "Card Tag Setting"
 
-		
+		}
 
-	
 
-	
+	}
 
 }

@@ -27,7 +27,7 @@ class CardDetailsPanel extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 spacing: 6,
                 children: [
-                  Text(t.cardType),
+                  Text(t.cardPropPanel.cardDetail.cardType),
 				  
                   ComboBox<String>(
                     value: cardType.name,

@@ -1,9 +1,44 @@
 {
 	"appTitle": "东方灵麟棋卡牌模板生成器",
-	"seasonElementSelect": "季语选择",
-	"cardCost": "灵力花费",
-	"seasonElementRequirement":"季语需求",
-	"cardType": "卡牌类型",
-	"cardDescription": "卡牌效果描述",
-	"cardKeyWordSetting": "卡牌关键字设置"
+
+
+
+	"cardPropPanel":{
+		"name":	"Card Properties Panel",
+
+		"basicProp": {
+			"name":"basicProp",
+			"cardName":"Card Name",
+			"cardRarity": {
+				"normal":"normal",
+				"unusual":"unusual",
+				"rare":"rare",
+				"treasure":"treasure"
+			},
+			"illustrationPath": "Illustration Path"
+			
+		},
+
+		"seasonElementSelect": {
+			"name":"季语选择",
+
+			"cardCost": "灵力花费",
+			"seasonElementRequirement":"季语需求"
+
+		},
+
+		"cardDetail": {
+			"name":"Card Detail",
+
+			"cardType": "卡牌类型",
+			"cardDescription": "卡牌效果描述",
+			"cardKeyWordSetting": "卡牌关键字设置",
+			"cardTagSetting": "Card Tag Setting"
+
+		}
+
+
+	}
+
+
 }

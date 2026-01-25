@@ -1,7 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' show Icons;
+import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/convert.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
+import 'package:lucky_beast_card_template_generator/internal/extensions.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +24,7 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
     final cardModel = context.read<CardModel>();
 
     return Expander(
+      initiallyExpanded: true,
       header: Text("基础属性: name 稀有度 季语类别(混合?) "),
       content: Column(
         spacing: 12,
@@ -43,59 +46,127 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
             ],
           ),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-
-              Row(
-                spacing: 12,
-                children: List.generate(4, (index) {
-                    return DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16)
-                      ),
-                      child: ToggleButton(
-
-                        style: ToggleButtonThemeData(
-                          checkedButtonStyle: ButtonStyle(
-                            elevation: WidgetStatePropertyAll(1.5),
-
-                            //backgroundColor: WidgetStatePropertyAll(),
-
-                          )
-                        ),
-                        checked: true,
-                        onChanged: (_) {},
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              convertCardTypeImageUrl(SeasonType.values[index + 1]),
-                              scale: 2.5,
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-              ),
-
-              Column(
-                spacing: 3,
+          Selector<CardModel,  (Set<SeasonType>,bool)>(
+            selector: (_, cardModel) => (cardModel.cardDetails.seasonTypeSet,cardModel.cardDetails.isMixed),
+            builder: (_, seasonState, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
 
-                  ToggleSwitch(
-                    checked: false,
-                    onChanged: (_) {}
+                  Row(
+                    spacing: 12,
+                    children: List.generate(4, (index) {
+                        return DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16)
+                          ),
+                          child: ToggleButton(
+                            style: ToggleButtonThemeData(
+                              checkedButtonStyle: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(SeasonType.values[index + 1].color),
+
+                                elevation: WidgetStatePropertyAll(1.5),
+
+                              ),
+                              uncheckedButtonStyle: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.fromMap({
+                                  WidgetState.disabled: Colors.grey.withValues(alpha: 0.3)
+                                }),
+                                elevation: WidgetStateProperty.all(1.5),
+
+                              ),
+
+                            ),
+                            checked: seasonState.$1.contains(SeasonType.values[index + 1]),
+                            onChanged: 
+                            (
+                            seasonState.$2 == false &&
+                              seasonState.$1.isNotEmpty &&
+                              seasonState.$1.first != SeasonType.values[index + 1]
+
+                            ) ? 
+                              null : 
+                              (value) {
+
+                                if (seasonState.$1.contains(SeasonType.values[index + 1])) {
+                                  cardModel.updateSeasonType = seasonState.$1.copyWithRemove(element: SeasonType.values[index + 1]).toSet();
+                                }
+
+                                else {
+                                  cardModel.updateSeasonType = seasonState.$1.copyWithAdd(SeasonType.values[index + 1]).toSet();
+
+                                }
+
+                              }
+                            ,
+
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  convertElementTypeImageUrl(seasonType: SeasonType.values[index + 1]),
+                                  scale: 2.5,
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+
                   ),
 
-                  Image.asset(convertCardTypeImageUrl(SeasonType.wild),scale: 2.5)
+                  Column(
+                    spacing: 3,
+                    children: [
+
+                      ToggleSwitch(
+                        checked: seasonState.$2,
+                        onChanged: (_) {
+                          cardModel.updateMixedType = !seasonState.$2;
+                          if (seasonState.$1.length > 1) {
+                            cardModel.updateSeasonType = {seasonState.$1.first};
+                          }
+                        }
+                      ),
+
+                      Image.asset(convertElementTypeImageUrl(seasonType: SeasonType.wild), scale: 2.5)
+
+                    ],
+                  )
 
                 ],
-              )
+              );
+            },
+          ),
 
-            ],
+          Selector<CardModel, CardRarity>(
+            selector: (_, cardModel) => cardModel.cardDetails.cardRarity,
+            builder: (_, rarityType, child) {
+
+              t.appTitle;
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  
+
+                  Text(t.cardPropPanel.basicProp.cardRarity.name),
+
+                  DropDownButton(
+                    title: Text(rarityType.text),
+                    items: List.generate(
+                      CardRarity.values.length,
+                      (index) => MenuFlyoutItem(
+                        text: Text(CardRarity.values[index].text),
+                        onPressed: () => cardModel.updateRarity = CardRarity.values[index],
+                      )
+                    ),
+                  )
+
+                ]
+              );
+            }
+
           )
-
         ],
       ),
     );

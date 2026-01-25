@@ -1,6 +1,5 @@
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 
-///按照布局位置进行排列
 class CardDetails {
 
   //基础信息
@@ -8,15 +7,15 @@ class CardDetails {
   String? imageUrl;
 
   //涉及卡面背景 & 种类
-  SeasonType seasonType = SeasonType.wild;
+  
+  Set<SeasonType> seasonTypeSet = {};
+  bool isMixed = false;
   CardType cardType = CardType.minion;
 
   //费用与类别
   int? cost = 0;
   List<int> seasonRequirement = [0,0,0,0,0];
-
-
-  CardRarity? cardRarity;
+  CardRarity cardRarity = CardRarity.normal;
 
 
   List<String> inherentTags = [];
