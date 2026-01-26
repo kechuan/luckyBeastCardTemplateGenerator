@@ -11,16 +11,22 @@ class APPRepository{
                       officalConstructionTemplate = "$officalTemplate/construction_card",
                       officalMinionTemplate = "$officalTemplate/minion_card",
                       officalSpellTemplate = "$officalTemplate/spell_card",
+                      officalRarityTemplate = "$officalTemplate/rarity_type",
 
                       customConstructionTemplate = "$customTemplate/construction_card",
                       customElementTemplate = "$customTemplate/element_type",
-                      customMinionTemplate = "$customTemplate/minion_card"
+                      customMinionTemplate = "$customTemplate/minion_card",
+                      customRarityTemplate = "$customTemplate/rarity_card"
+
     ;
                       
 
 
 
 }
+
+/// 基准设计稿尺寸
+const Size kCardDesignSize = Size(500, 700);
 
 
 const PaddingH6 = EdgeInsetsDirectional.symmetric(horizontal: 6);

@@ -54,11 +54,11 @@ class _CardOverlayPositionsPanelState extends State<CardOverlayPositionsPanel> {
             builder: (_, value, _) {
 
               final cardModel = context.read<CardModel>();
-              final originElementPositions = cardModel.cardElementPositions[positionTypeNotifer.value] ?? ElementPositions();
+              final originElementPosition = cardModel.cardElementPosition[positionTypeNotifer.value] ?? ElementPosition();
 
-              double currentElementPositionsX = originElementPositions.relativePosition.dx;
-              double currentElementPositionsY = originElementPositions.relativePosition.dy;
-              double currentElementPositionsSize = originElementPositions.relativeSize;
+              double currentElementPositionX = originElementPosition.relativePosition.dx;
+              double currentElementPositionY = originElementPosition.relativePosition.dy;
+              double currentElementPositionSize = originElementPosition.relativeSize;
 
               return Column(
                 spacing: 12,
@@ -69,11 +69,11 @@ class _CardOverlayPositionsPanelState extends State<CardOverlayPositionsPanel> {
                     (index) {
 
 
-                      return Selector<CardModel, ElementPositions>(
+                      return Selector<CardModel, ElementPosition>(
                         selector: (_, cardModel){
-                           return cardModel.cardElementPositions[positionTypeNotifer.value] ?? ElementPositions();
+                           return cardModel.cardElementPosition[positionTypeNotifer.value] ?? ElementPosition();
                         },
-                        builder: (_, cardElementPositions, _) {
+                        builder: (_, cardElementPosition, _) {
                           return Row(
                             spacing: 12,
                             children: [
@@ -91,31 +91,31 @@ class _CardOverlayPositionsPanelState extends State<CardOverlayPositionsPanel> {
                               ),
                               Flexible(
                                 child: Slider(
-                                  min: -1,
-                                  max: 1,
+                                  min: index == 2 ? -1 : -50,
+                                  max: index == 2 ? 1 : 50,
                                   value: switch(index){
-                                    0 => cardElementPositions.relativePosition.dx,
-                                    1 => cardElementPositions.relativePosition.dy,
-                                    2 => cardElementPositions.relativeSize,
+                                    0 => cardElementPosition.relativePosition.dx,
+                                    1 => cardElementPosition.relativePosition.dy,
+                                    2 => cardElementPosition.relativeSize,
                                     _ => 0
                                   },
 
                                   onChanged: (value) {
 
                                     switch (index){
-                                      case 0:currentElementPositionsX = value;
-                                      case 1:currentElementPositionsY = value;
-                                      case 2:currentElementPositionsSize = value;
+                                      case 0:currentElementPositionX = value;
+                                      case 1:currentElementPositionY = value;
+                                      case 2:currentElementPositionSize = value;
                                     }
 
-                                    final offsetElementPositions = ElementPositions(
-                                      relativePosition: Offset(currentElementPositionsX, currentElementPositionsY),
-                                      relativeSize: currentElementPositionsSize
+                                    final offsetElementPosition = ElementPosition(
+                                      relativePosition: Offset(currentElementPositionX, currentElementPositionY),
+                                      relativeSize: currentElementPositionSize
                                     );
 
-                                    cardModel.updateCardElementPositions = {
-                                      ...(cardModel.cardElementPositions),
-                                      positionTypeNotifer.value : offsetElementPositions
+                                    cardModel.updateCardElementPosition = {
+                                      ...(cardModel.cardElementPosition),
+                                      positionTypeNotifer.value : offsetElementPosition
                                     };
 
                                   },
@@ -123,9 +123,9 @@ class _CardOverlayPositionsPanelState extends State<CardOverlayPositionsPanel> {
                               ),
 
                               switch(index){
-                                 0 => Text(cardElementPositions.relativePosition.dx.toStringAsFixed(2)),
-                                 1 => Text(cardElementPositions.relativePosition.dy.toStringAsFixed(2)),
-                                 2 => Text(cardElementPositions.relativeSize.toStringAsFixed(2)),
+                                 0 => Text(cardElementPosition.relativePosition.dx.toStringAsFixed(2)),
+                                 1 => Text(cardElementPosition.relativePosition.dy.toStringAsFixed(2)),
+                                 2 => Text(cardElementPosition.relativeSize.toStringAsFixed(2)),
                                  _ => Text("")
                               }
 
@@ -148,13 +148,13 @@ class _CardOverlayPositionsPanelState extends State<CardOverlayPositionsPanel> {
                     ),
                     onPressed: () {
 
-                      currentElementPositionsX = 0;
-                      currentElementPositionsY = 0;
-                      currentElementPositionsSize = 0;
+                      currentElementPositionX = 0;
+                      currentElementPositionY = 0;
+                      currentElementPositionSize = 0;
 
-                      cardModel.updateCardElementPositions = {
-                        ...(cardModel.cardElementPositions),
-                        positionTypeNotifer.value : ElementPositions()
+                      cardModel.updateCardElementPosition = {
+                        ...(cardModel.cardElementPosition),
+                        positionTypeNotifer.value : ElementPosition()
                       };
 
                     }

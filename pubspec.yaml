@@ -33,10 +33,10 @@ flutter:
 
   assets:
     - assets/logo.png
-    - assets/offical_card_template/
     - assets/offical_card_template/element_type/
     - assets/offical_card_template/construction_card/
     - assets/offical_card_template/minion_card/
     - assets/offical_card_template/spell_card/
+    - assets/offical_card_template/rarity_type/
     - assets/custom_card_template/
 

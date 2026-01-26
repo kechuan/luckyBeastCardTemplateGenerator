@@ -105,7 +105,7 @@ class _TranslationsCardPropPanelBasicPropCardRarityZhCn extends TranslationsCard
 	@override String get normal => 'normal';
 	@override String get unusual => 'unusual';
 	@override String get rare => 'rare';
-	@override String get treasure => 'treasure';
+	@override String get mythic => 'Mythic';
 }
 
 /// The flat map containing all translations for locale <zh-CN>.
@@ -123,7 +123,7 @@ extension on TranslationsZhCn {
 			'cardPropPanel.basicProp.cardRarity.normal' => 'normal',
 			'cardPropPanel.basicProp.cardRarity.unusual' => 'unusual',
 			'cardPropPanel.basicProp.cardRarity.rare' => 'rare',
-			'cardPropPanel.basicProp.cardRarity.treasure' => 'treasure',
+			'cardPropPanel.basicProp.cardRarity.mythic' => 'Mythic',
 			'cardPropPanel.basicProp.illustrationPath' => 'Illustration Path',
 			'cardPropPanel.seasonElementSelect.name' => '季语选择',
 			'cardPropPanel.seasonElementSelect.cardCost' => '灵力花费',

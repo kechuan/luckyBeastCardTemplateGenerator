@@ -147,8 +147,6 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
 
-                  
-
                   Text(t.cardPropPanel.basicProp.cardRarity.name),
 
                   DropDownButton(

@@ -10,10 +10,10 @@
 			"name":"basicProp",
 			"cardName":"Card Name",
 			"cardRarity": {
-				"normal":"normal",
-				"unusual":"unusual",
-				"rare":"rare",
-				"treasure":"treasure"
+				"normal":"Normal",
+				"unusual":"Unusual",
+				"rare":"Rare",
+				"mythic":"Mythic"
 			},
 			"illustrationPath": "Illustration Path"
 			

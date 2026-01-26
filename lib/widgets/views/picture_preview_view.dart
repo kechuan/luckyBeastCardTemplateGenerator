@@ -53,7 +53,7 @@ class _PicturePreviewViewState extends State<PicturePreviewView> {
             child: RepaintBoundary(
               key: boundaryKey,
               child: CardContent(
-                containerSize: displaySize,
+                cardContainerSize: displaySize,
               ),
             ),
           ),
@@ -66,10 +66,10 @@ class _PicturePreviewViewState extends State<PicturePreviewView> {
 class CardContent extends StatefulWidget {
   const CardContent({
     super.key,
-    required this.containerSize
+    required this.cardContainerSize
   });
 
-  final Size containerSize;
+  final Size cardContainerSize;
 
   @override
   State<CardContent> createState() => _CardContentState();
@@ -106,28 +106,30 @@ class _CardContentState extends State<CardContent> {
               }
             ),
 
-            ...cardModel.cardElementPositions.keys.map((element) {
+            ...cardModel.cardElementPosition.keys.map((elementType) {
+            //...ElementPositionConfigs.layouts.keys.map((elementType) {
 
                 if (!isMinion) {
                   if ([
                     CardElementPositionType.attack,
                     CardElementPositionType.health,
                     CardElementPositionType.typeTag
-                  ].contains(element)) {
+                  ].contains(elementType)) {
                     return const SizedBox.shrink();
                   }
                 }
 
-                return Selector<CardModel, ElementPositions>(
-                  selector: (_, model) => model.cardElementPositions[element] ?? ElementPositions(),
-                  builder: (_, readjustmentElementPosition, _) {
+                return Selector<CardModel, ElementPosition?>(
+                  selector: (_, model) => model.cardElementPosition[elementType],
+                  builder: (_, readjustElementPosition, _) {
+
 
                     return CardRenderElement(
-						containerSize: widget.containerSize,
-						readjustElementPosition:readjustmentElementPosition,
-						elementPositionType: element,
-						isTextElement: element.isTextElement(),
-					);
+                      cardContainerSize: widget.cardContainerSize,
+                      readjustElementPosition: readjustElementPosition,
+                      elementPositionType: elementType,
+                      //isTextElement: element.isTextElement(),
+                    );
                   }
                 );
 
@@ -144,7 +146,7 @@ class _CardContentState extends State<CardContent> {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
-                  '${widget.containerSize.width.toInt()} x ${widget.containerSize.height.toInt()}',
+                  '${widget.cardContainerSize.width.toInt()} x ${widget.cardContainerSize.height.toInt()}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 10,

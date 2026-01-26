@@ -1,6 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
-import 'package:lucky_beast_card_template_generator/models/informations/card_positions.dart';
 
 
 
@@ -42,12 +41,12 @@ enum CardRarity{
 	normal(),
 	unusual(),
 	rare(),
-	treasure()
+	mythic()
 	
 	;
 
   //String get text => t['common.${name}'];
-  String get text => t['cardPropPanel.basicProp.cardRarity.$name'];
+  String get text => t['cardPropPanel.basicProp.cardRarity.$name'] ?? "";
 
 	const CardRarity();
 
@@ -57,22 +56,25 @@ enum CardRarity{
 
 enum CardElementPositionType{
 
-  name(ElementPositions(relativePosition: Offset(0.40, 0.105),relativeSize: 0.2)),
-  cost(ElementPositions(relativePosition: Offset(0.088, 0.06),relativeSize: 0.11)),
-  seasonRequirement(ElementPositions(relativePosition: Offset(0.08, 0.00),relativeSize: 0.2)),
   
-  gem(ElementPositions(relativePosition: Offset(0.01, 0.02),relativeSize: 0.2)),
-  image(ElementPositions(relativePosition: Offset(0.25, 0.19),relativeSize: 0.5)),
-  attack(ElementPositions(relativePosition: Offset(0.133, 0.84),relativeSize: 0.1)),
-  health(ElementPositions(relativePosition: Offset(0.763, 0.845),relativeSize: 0.1)),
-  inherentTag(ElementPositions(relativePosition: Offset(0.5, 0.95),relativeSize: 0.2)),
-  typeTag(ElementPositions(relativePosition: Offset(0.5, 0.95),relativeSize: 0.2)),
-  description(ElementPositions(relativePosition: Offset(0.5, 0.95),relativeSize: 0.2)),
+  name(),
+  cost(),
+  
+  
+  gem(),
+  seasonRequirement(),
+  image(),
+  attack(),
+  health(),
+  inherentTag(),
+  typeTag(),
+  description(),
   ;
 
-  final ElementPositions elementPositions;
+  //final ElementPosition elementPosition;
   
-  const CardElementPositionType(this.elementPositions);
+  //const CardElementPositionType(this.elementPosition);
+  const CardElementPositionType();
 
 
   bool isTextElement(){

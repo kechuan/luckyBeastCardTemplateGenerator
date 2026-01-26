@@ -3,6 +3,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/convert.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
+import 'package:lucky_beast_card_template_generator/internal/extensions.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/fragments/general_number_input_box.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +33,15 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
       });
 
       elementsTextEditingControllers = List.generate(SeasonType.values.length, (index) {
-          return TextEditingController(
-            text: cardModel.cardDetails.seasonRequirement[index].toString()
-          );
+
+        return TextEditingController(
+          text: cardModel.cardDetails.seasonRequirement[index].toString()
+        )..addListener((){
+          cardModel.updateSeasonRequirement = 
+            cardModel.cardDetails.seasonRequirement.copyWithReplace(index, int.tryParse(elementsTextEditingControllers[index].text) ?? 0);
         });
+      });
+
     }
 
     super.initState();
@@ -114,7 +120,10 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
                           value: double.tryParse(textValue.text)?.clamp(0, 6) ?? 0,
                           divisions: 6,
                           onChanged: (value) {
+                            //final cardModel = context.read<CardModel>();
                             elementsTextEditingControllers[index].text = value.toStringAsFixed(0);
+                            //cardModel.updateSeasonRequirement = cardModel.cardDetails.seasonRequirement.copyWithReplace(index, value.toInt());
+
                           },
 
                         );

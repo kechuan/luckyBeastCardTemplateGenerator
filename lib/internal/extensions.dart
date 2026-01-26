@@ -29,3 +29,15 @@ extension ImmutableCollectionExtension<E> on Iterable<E> {
     return list;
   }
 }
+
+extension ListExtension<E extends num> on List<E> {
+  
+  num count(){
+    num count = 0;
+    for(E num in this){
+      count+=num;
+    }
+
+    return count;
+  }
+}

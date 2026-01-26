@@ -28,11 +28,13 @@ String convertCardTypeImageUrl({
     }
   }
 
-  return switch(seasonTypeSet.length){
+  final orderSeasonList = seasonTypeSet.toList()..sort((a, b) => a.index.compareTo(b.index));
+
+  return switch(orderSeasonList.length){
     0 => "$targetResourcePath/${SeasonType.wild.name}_$cardTypeSuffix.png",
-    1 => "$targetResourcePath/${seasonTypeSet.first.name}_$cardTypeSuffix.png",
-    2 => "$targetResourcePath/${seasonTypeSet.first.name}_${seasonTypeSet.last.name}_$cardTypeSuffix.png",
-    _ => throw Exception("Invalid season type set length: ${seasonTypeSet.length}"),
+    1 => "$targetResourcePath/${orderSeasonList.first.name}_$cardTypeSuffix.png",
+    2 => "$targetResourcePath/${orderSeasonList.first.name}_${orderSeasonList.last.name}_$cardTypeSuffix.png",
+    _ => "",
 
   };
 
@@ -57,12 +59,5 @@ String convertElementTypeImageUrl(
   };
 }
 
-Iterable immutableStyleAddElement(
-  Iterable iterable,
-  dynamic element,
-  {int? insertIndex}
-){
-  
-
-  return iterable;
-}
+String convertCardRarityTypeImageUrl(CardRarity cardRarity)
+  => "${APPRepository.officalRarityTemplate}/${cardRarity.name}.png";

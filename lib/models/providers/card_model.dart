@@ -9,10 +9,12 @@ class CardModel extends ChangeNotifier{
 
   CardDetails cardDetails = CardDetails();
 
-  //上半部分处理 <basicPositions:TogglePositions>
-  Map<CardElementPositionType,ElementPositions> cardElementPositions = {
-    for(var positionType in CardElementPositionType.values) positionType : ElementPositions(),
+  
+  Map<CardElementPositionType,ElementPosition> cardElementPosition = {
+    for(final cardElementPositionType in CardElementPositionType.values) cardElementPositionType : ElementPosition(),
   };
+
+
 
   set updateCardType(CardType newCardType) {
     cardDetails.cardType = newCardType;
@@ -69,8 +71,8 @@ class CardModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  set updateCardElementPositions(Map<CardElementPositionType, ElementPositions> newElementPositions) {
-    cardElementPositions = newElementPositions;
+  set updateCardElementPosition(Map<CardElementPositionType, ElementPosition> newElementPosition) {
+    cardElementPosition = newElementPosition;
     notifyListeners();
   }
 

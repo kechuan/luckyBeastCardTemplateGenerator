@@ -154,8 +154,8 @@ class TranslationsCardPropPanelBasicPropCardRarityEn {
 	/// en: 'Rare'
 	String get rare => 'Rare';
 
-	/// en: 'Treasure'
-	String get treasure => 'Treasure';
+	/// en: 'Mythic'
+	String get mythic => 'Mythic';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -177,7 +177,7 @@ extension on Translations {
 			'cardPropPanel.basicProp.cardRarity.normal' => 'Normal',
 			'cardPropPanel.basicProp.cardRarity.unusual' => 'Unusual',
 			'cardPropPanel.basicProp.cardRarity.rare' => 'Rare',
-			'cardPropPanel.basicProp.cardRarity.treasure' => 'Treasure',
+			'cardPropPanel.basicProp.cardRarity.mythic' => 'Mythic',
 			'cardPropPanel.basicProp.illustrationPath' => 'Illustration Path',
 			'cardPropPanel.seasonElementSelect.name' => 'Season ElementSelect',
 			'cardPropPanel.seasonElementSelect.cardCost' => 'Card Cost',
