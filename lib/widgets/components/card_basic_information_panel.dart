@@ -39,10 +39,10 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
                 child: TextBox(
                   controller: cardNameController,
                   placeholder: t.cardPropPanel.basicProp.cardName,
-                  onEditingComplete: () {
-                    //cardModel.updateName = cardNameController.text;
+                  onChanged: (value) {
                     cardModel.updateName(cardNameController.text);
                   },
+                 
                 )
               )
             ],
