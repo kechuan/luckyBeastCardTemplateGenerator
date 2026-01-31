@@ -35,6 +35,8 @@ migrate_working_dir/
 /backup/
 /images/
 
+*.rar
+
 # Symbolication related
 app.*.symbols
 
