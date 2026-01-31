@@ -148,7 +148,7 @@ class SettingPage extends StatelessWidget {
                   children: [
                     Text(t.settingPage.about, style: TextStyle(fontSize: 24)),
                     IconButton(
-                      icon:WindowsIcon(MdiExtensionIcons.github),
+                      icon:WindowsIcon(MdiExtensionIcons.github,size: 24),
                       onPressed: () {
                         launchUrlString(APPRepository.githubRepository);
                       },

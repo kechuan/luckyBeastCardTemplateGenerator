@@ -104,7 +104,7 @@ class CardModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void updateImageUrl(String newImageUrl) {
+  void updateImageUrl(String? newImageUrl) {
     updateCardDetails(
       cardDetails.copyWith(
         imageUrl: newImageUrl

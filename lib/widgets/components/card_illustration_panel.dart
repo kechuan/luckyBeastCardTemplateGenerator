@@ -34,6 +34,7 @@ class CardIllustrationPanel extends StatelessWidget {
               ),
               onPressed: () {
                 appModel.updateIllustrationPaths = {};
+                context.read<CardModel>().updateImageUrl(null);
               },
             ),
           )

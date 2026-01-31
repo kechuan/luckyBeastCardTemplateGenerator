@@ -21,7 +21,7 @@ class APPRepository{
     ;
                       
 
-  static const String version = "0.2.0";
+  static const String version = "0.2.1";
   static const String gameOfficalQQGroup = "305791725";
   static const String author = "kechuan";
   static const String githubRepository = "https://github.com/kechuan/luckyBeastCardTemplateGenerator";

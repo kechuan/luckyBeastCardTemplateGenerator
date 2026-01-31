@@ -1,7 +1,7 @@
 name: lucky_beast_card_template_generator
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.2.0
+version: 0.2.1
 
 environment:
   sdk: ^3.10.3
@@ -47,7 +47,7 @@ flutter:
     - assets/offical_card_template/minion_card/
     - assets/offical_card_template/spell_card/
     - assets/offical_card_template/rarity_type/
-    - assets/custom_card_template/
+    #- assets/custom_card_template/
 
 flutter_launcher_icons:
   #android: "launcher_icon"
