@@ -56,7 +56,7 @@ class CardDetails{
   }){
     return CardDetails(
       name: name ?? this.name,
-      imageUrl: imageUrl ?? this.imageUrl,
+      imageUrl: imageUrl,
       seasonTypeSet: seasonTypeSet ?? this.seasonTypeSet,
       isMixed: isMixed ?? this.isMixed,
       cardType: cardType ?? this.cardType,

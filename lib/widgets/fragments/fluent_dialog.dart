@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:filepicker_windows/filepicker_windows.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/const.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
@@ -125,6 +125,9 @@ class FluentDialog extends StatelessWidget {
                             width: 60,
                             child: GeneralNumberInputBox(
                               textEditingController: outputImageWidthController,
+                              inputFormatter:[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               enabled: status,
                             ),
                           ),
@@ -135,6 +138,9 @@ class FluentDialog extends StatelessWidget {
                             width: 60,
                             child: GeneralNumberInputBox(
                               textEditingController: outputImageHeightController,
+                              inputFormatter:[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               enabled: status,
                             ),
                           ),

@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 import 'package:lucky_beast_card_template_generator/internal/number_input_formatter.dart';
 
 class GeneralNumberInputBox extends StatelessWidget {
@@ -11,7 +12,9 @@ class GeneralNumberInputBox extends StatelessWidget {
 
     this.onChanged,
     this.onEditingComplete,
-    this.enabled
+    this.enabled,
+
+    this.inputFormatter
     
 
   });
@@ -23,6 +26,8 @@ class GeneralNumberInputBox extends StatelessWidget {
   final Function()? onEditingComplete;
   final bool? enabled;
 
+  final List<TextInputFormatter>? inputFormatter;
+
   final TextEditingController textEditingController;
 
   @override
@@ -32,7 +37,7 @@ class GeneralNumberInputBox extends StatelessWidget {
       width: width ?? 35,
       child: TextFormBox(
         controller: textEditingController,
-        inputFormatters: defaultInputFormatter,
+        inputFormatters: inputFormatter ?? defaultInputFormatter,
         onEditingComplete: onEditingComplete,
         onChanged: onChanged,
         enabled: enabled ?? true,

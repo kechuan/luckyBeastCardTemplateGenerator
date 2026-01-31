@@ -55,8 +55,8 @@ class _FluentCardMinionTypePropState extends State<FluentCardMinionTypeProp> {
                     max: 20,
                     value: (double.tryParse(attackText.text) ?? 0).clamp(0, 20),
                     onChanged: (value) {
-                      attackTextEditingControllers.text = value.toStringAsFixed(0);
-                      context.read<CardModel>().updateAttack(value.toInt());
+                      attackTextEditingControllers.text = value.round().toStringAsFixed(0);
+                      context.read<CardModel>().updateAttack(value.round());
                       
                     }
                   )
@@ -88,8 +88,8 @@ class _FluentCardMinionTypePropState extends State<FluentCardMinionTypeProp> {
                     max: 20,
                     value: (double.tryParse(healthText.text) ?? 0).clamp(0, 20),
                     onChanged: (value) {
-                      healthTextEditingControllers.text = value.toStringAsFixed(0);
-                      context.read<CardModel>().updateHealth(value.toInt());
+                      healthTextEditingControllers.text = value.round().toStringAsFixed(0);
+                      context.read<CardModel>().updateHealth(value.round());
                     }
                   )
                 );

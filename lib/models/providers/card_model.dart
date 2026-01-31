@@ -14,7 +14,7 @@ class CardModel extends ChangeNotifier{
     for (final cardElementPositionType in CardElementPositionType.values) cardElementPositionType : ElementPosition(),
   };
 
-  void updateCardImageUrl(String newImageUrl) {
+  void updateCardImageUrl(String? newImageUrl) {
     updateCardDetails(
       cardDetails.copyWith(
         imageUrl: newImageUrl
@@ -99,15 +99,6 @@ class CardModel extends ChangeNotifier{
     updateCardDetails(
       cardDetails.copyWith(
         cardRarity: newRarity
-      )
-    );
-    notifyListeners();
-  }
-
-  void updateImageUrl(String? newImageUrl) {
-    updateCardDetails(
-      cardDetails.copyWith(
-        imageUrl: newImageUrl
       )
     );
     notifyListeners();

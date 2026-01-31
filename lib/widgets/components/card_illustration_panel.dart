@@ -34,7 +34,7 @@ class CardIllustrationPanel extends StatelessWidget {
               ),
               onPressed: () {
                 appModel.updateIllustrationPaths = {};
-                context.read<CardModel>().updateImageUrl(null);
+                context.read<CardModel>().updateCardImageUrl(null);
               },
             ),
           )
@@ -83,8 +83,7 @@ class CardIllustrationPanel extends StatelessWidget {
                               child: ListTile(
 
                                 onPressed: () {
-                                  final cardModel = context.read<CardModel>();
-                                  cardModel.updateCardImageUrl(appModel.illustrationPaths.elementAt(index));
+                                  context.read<CardModel>().updateCardImageUrl(appModel.illustrationPaths.elementAt(index));
                                 },
                                 leading: 
                                 selectedImageUrl == appModel.illustrationPaths.elementAt(index) ? 
