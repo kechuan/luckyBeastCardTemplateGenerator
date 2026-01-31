@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 import 'package:lucky_beast_card_template_generator/models/informations/card_details.dart';
@@ -9,86 +10,141 @@ class CardModel extends ChangeNotifier{
 
   CardDetails cardDetails = CardDetails();
 
-  
-  Map<CardElementPositionType,ElementPosition> cardElementPosition = {
-    for(final cardElementPositionType in CardElementPositionType.values) cardElementPositionType : ElementPosition(),
+  Map<CardElementPositionType, ElementPosition> cardElementPosition = {
+    for (final cardElementPositionType in CardElementPositionType.values) cardElementPositionType : ElementPosition(),
   };
 
-
-
-  set updateCardType(CardType newCardType) {
-    cardDetails.cardType = newCardType;
+  void updateCardImageUrl(String newImageUrl) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        imageUrl: newImageUrl
+      )
+    );
     notifyListeners();
   }
 
-  set updateAttack(int newAttack) {
-    cardDetails.attack = newAttack;
+  void updateCardType(CardType newCardType) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        cardType: newCardType
+      )
+    );
     notifyListeners();
   }
 
-  set updateHealth(int newHealth) {
-    cardDetails.health = newHealth;
+  void updateAttack(int newAttack) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        attack: newAttack
+      )
+    );
     notifyListeners();
   }
 
-  set updateSeasonType(Set<SeasonType> newSeasonTypeSet) {
-    cardDetails.seasonTypeSet = newSeasonTypeSet;
+  void updateHealth(int newHealth) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        health: newHealth
+      )
+    );
     notifyListeners();
   }
 
-  set updateMixedType(bool newState) {
-    cardDetails.isMixed = newState;
+  void updateSeasonType(Set<SeasonType> newSeasonTypeSet) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        seasonTypeSet: newSeasonTypeSet
+      )
+    );
     notifyListeners();
   }
 
-  set updateMinionType(List<String> newMinionType) {
-    cardDetails.minionType = newMinionType;
+  void updateMixedType(bool newState) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        isMixed: newState
+      )
+    );
     notifyListeners();
   }
 
-  set updateName(String newName) {
-    cardDetails.name = newName;
+  void updateName(String newName) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        name: newName
+      )
+    );
     notifyListeners();
   }
 
-  set updateCost(int newCost) {
-    cardDetails.cost = newCost;
+  void updateCost(int newCost) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        cost: newCost
+      )
+    );
     notifyListeners();
   }
 
-  set updateSeasonRequirement(List<int> newSeasonRequirement) {
-    cardDetails.seasonRequirement = newSeasonRequirement;
+  void updateSeasonRequirement(List<int> newSeasonRequirement) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        seasonRequirement: newSeasonRequirement
+      )
+    );
     notifyListeners();
   }
 
-  set updateRarity(CardRarity newRarity) {
-    cardDetails.cardRarity = newRarity;
+  void updateRarity(CardRarity newRarity) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        cardRarity: newRarity
+      )
+    );
     notifyListeners();
   }
 
-  set updateImageUrl(String newImageUrl) {
-    cardDetails.imageUrl = newImageUrl;
+  void updateImageUrl(String newImageUrl) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        imageUrl: newImageUrl
+      )
+    );
     notifyListeners();
   }
 
-  set updateCardElementPosition(Map<CardElementPositionType, ElementPosition> newElementPosition) {
-    cardElementPosition = newElementPosition;
+  void updateminionTags(List<String> newTags) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        minionTags: newTags
+      )
+    );
+
     notifyListeners();
   }
 
+  void updateDescription(String newDescription) {
+    updateCardDetails(
+      cardDetails.copyWith(
+        description: newDescription
+      )
+    );
 
-  set updateInherentTags(List<String> newTags) {
-    cardDetails.inherentTags = newTags;
     notifyListeners();
   }
 
-  set updateDescription(String newDescription) {
-    cardDetails.description = newDescription;
+  void updateCardDetails(CardDetails newCardDetails) {
+    cardDetails = newCardDetails;
     notifyListeners();
   }
 
   void reset() {
     cardDetails = CardDetails();
+    notifyListeners();
+  }
+
+  set updateCardElementPosition(Map<CardElementPositionType, ElementPosition> newElementPosition) {
+    cardElementPosition = newElementPosition;
     notifyListeners();
   }
 

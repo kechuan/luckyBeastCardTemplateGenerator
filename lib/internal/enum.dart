@@ -5,20 +5,29 @@ import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 
 enum NavItem{
   //menu(WindowsIcons.global_nav_button),
-  picture(WindowsIcons.picture),
+  //picture(WindowsIcons.picture),
   palette(WindowsIcons.pen_palette)
   ;
 
   final IconData icon;
 
   const NavItem(this.icon);
+
+  String get text => t['navigationPanel.$name'] ?? "";
 }
 
 enum SeasonType{
-  wild(Color.fromARGB(200, 0, 0, 0)),
-  spring(Color.fromARGB(200, 56, 134, 108)),
+  wild(Color.fromARGB(200, 199, 199, 199)),
+
+  //默认的颜色映射出来确实不好看 只能调亮了
+  //Color.fromARGB(200, 56, 134, 108)
+  spring(Color.fromARGB(155, 130, 199, 132)),
   summer(Color.fromARGB(200, 159, 34, 61)),
-  autumn(Color.fromARGB(200, 186, 133, 20)),
+  
+
+  //same issue
+  //原始数据: autumn(Color.fromARGB(200, 186, 133, 20)),
+  autumn(Color.fromARGB(200, 230, 191, 106)),
   winter(Color.fromARGB(200, 75, 116, 164)),
   ;
 
@@ -35,57 +44,66 @@ enum CardType{
 
   const CardType();
 
+  bool isChess() => this == CardType.minion;
+
+  String get text => t['cardPropPanel.cardDetail.cardType.$name'] ?? "";
+
 }
 
 enum CardRarity{
-	normal(),
-	unusual(),
-	rare(),
-	mythic()
-	
-	;
+  normal(),
+  unusual(),
+  rare(),
+  mythic()
+
+  ;
 
   //String get text => t['common.${name}'];
   String get text => t['cardPropPanel.basicProp.cardRarity.$name'] ?? "";
 
-	const CardRarity();
+  const CardRarity();
 
 
 
 }
 
+///与stack布局的顺序挂钩
 enum CardElementPositionType{
+  image,
+  description,
+  name,
+  typeTag,
 
+  cost,
+
+  gem,
+  seasonRequirement,
   
-  name(),
-  cost(),
+  attack,
+  health,
   
   
-  gem(),
-  seasonRequirement(),
-  image(),
-  attack(),
-  health(),
-  inherentTag(),
-  typeTag(),
-  description(),
+  
   ;
 
-  //final ElementPosition elementPosition;
+  //冲突避免 如果直接用 name 会锁定到枚举定义值上
+  String get text => t['cardPropPanel.elementPositions.cardElementPositionType.${EnumName(this).name}'] ?? "";
   
-  //const CardElementPositionType(this.elementPosition);
+
   const CardElementPositionType();
 
-
-  bool isTextElement(){
-	return switch (this) {
-		CardElementPositionType.name ||
-		CardElementPositionType.cost ||
-		CardElementPositionType.attack ||
-		CardElementPositionType.health ||
-		CardElementPositionType.typeTag => true,
-		_ => false,
-	};
+  bool isTextElement() {
+    return switch (this) {
+      CardElementPositionType.name ||
+      CardElementPositionType.cost ||
+      CardElementPositionType.attack ||
+      CardElementPositionType.health ||
+      CardElementPositionType.typeTag => true,
+      _ => false,
+    };
   }
+
+  
+  
 
 }

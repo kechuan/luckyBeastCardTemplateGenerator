@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:lucky_beast_card_template_generator/internal/const.dart';
 import 'package:lucky_beast_card_template_generator/internal/convert.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 import 'package:lucky_beast_card_template_generator/models/informations/card_positions.dart';
+import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
-import 'package:lucky_beast_card_template_generator/widgets/fragments/forigen_text_handle.dart';
+import 'package:lucky_beast_card_template_generator/widgets/fragments/scalable_element.dart';
+import 'package:lucky_beast_card_template_generator/widgets/fragments/season_element.dart';
 import 'package:provider/provider.dart';
 
 class CardRenderElement extends StatelessWidget {
@@ -12,21 +16,12 @@ class CardRenderElement extends StatelessWidget {
     super.key,
     required this.elementPositionType,
     required this.cardContainerSize,
-    this.readjustElementPosition,
-
-    //this.elementSize,
-
-    //required this.isTextElement,
 
   });
 
   final Size cardContainerSize;
 
   final CardElementPositionType elementPositionType;
-  final ElementPosition? readjustElementPosition;
-
-  //  final Size? elementSize;
-  //  final bool isTextElement;
 
   @override
   Widget build(BuildContext context) {
@@ -48,35 +43,39 @@ class CardRenderElement extends StatelessWidget {
       cardContainerSize,
     );
 
-    // 应用微调偏移
-    final finalPosition = scaledPosition + (
-      readjustElementPosition?.relativePosition ?? Offset.zero
-      );
+    return Selector<CardModel, ElementPosition?>(
+      selector: (_, model) => model.cardElementPosition[elementPositionType],
+      builder: (_, readjustElementPosition, _) {
 
-    debugPrint(
-      '[${elementPositionType.name}] '
-      'x:${designRect.x} => ${finalPosition.dx.toStringAsFixed(1)},'
-      'y:${designRect.y} => ${finalPosition.dy.toStringAsFixed(1)},'
-      'width:${designRect.width} => ${scaledSize.width.toStringAsFixed(1)},'
-      'height:${designRect.height} => ${scaledSize.height.toStringAsFixed(1)},'
-      'size Ratio.w:${(scaledSize.width / designRect.width).toStringAsFixed(2)},'
-      'size Ratio.h:${(scaledSize.height / designRect.height).toStringAsFixed(2)}'
+        // 应用微调偏移
+        final finalPosition = scaledPosition + (
+          readjustElementPosition?.relativePosition ?? Offset.zero
+        );
 
-    //  'Scaled: ${finalPosition.dx.toStringAsFixed(1)},${finalPosition.dy.toStringAsFixed(1)} '
-    //  '${scaledSize.width.toStringAsFixed(1)}x${scaledSize.height.toStringAsFixed(1)}'
-    );
+        debugPrint(
+          '[${elementPositionType.name}] '
+          'x:${designRect.x} => ${finalPosition.dx.toStringAsFixed(1)},'
+          'y:${designRect.y} => ${finalPosition.dy.toStringAsFixed(1)},'
+          'width:${designRect.width} => ${scaledSize.width.toStringAsFixed(1)},'
+          'height:${designRect.height} => ${scaledSize.height.toStringAsFixed(1)},'
+          'size Ratio.w:${(scaledSize.width / designRect.width).toStringAsFixed(2)},'
+          'size Ratio.h:${(scaledSize.height / designRect.height).toStringAsFixed(2)}'
+        );
 
-    return Positioned(
-      left: finalPosition.dx,
-      top: finalPosition.dy,
-      width: scaledSize.width,
-      height: scaledSize.height,
-      child: renderElement(
-        elementPositionType,
-        cardContainerSize,
-        scaledSize,
-        scaledSize.height / designRect.height,
-      ),
+        return Positioned(
+          left: finalPosition.dx,
+          top: finalPosition.dy,
+          width: scaledSize.width,
+          height: scaledSize.height,
+          child: renderElement(
+            elementPositionType,
+            cardContainerSize,
+            scaledSize,
+            scaledSize.height / designRect.height,
+            readjustElementPosition ?? ElementPosition(),
+          ),
+        );
+      }
     );
   }
 
@@ -91,171 +90,159 @@ Widget renderElement(
   Size cardContainerSize,
   Size elementLayoutSize,
   double scaleRatio,
+  ElementPosition readjustElementPosition, 
 ) {
-  return DecoratedBox(
-    decoration: BoxDecoration(
-      border: Border.all(color: const Color(0xFFFF0000)),
-    ),
-    child: Consumer<CardModel>(
-      builder: (_, cardModel, _) {
 
-        String renderText = "";
-        double designFontSize = 24;
-        double? strokeWidth;
+  //整个Model 就 Map 与 CardDetails 不值得再去拆分。。。
+  return Selector<CardModel, String>(
+    selector: (_, cardModel){
+      final cardDetails = cardModel.cardDetails;
 
-        switch (elementPositionType){
+      return switch (elementPositionType){
+        CardElementPositionType.name =>  cardDetails.name ?? '',
+        CardElementPositionType.cost =>  "${cardDetails.cost ?? '0'}",
+        CardElementPositionType.attack =>  "${cardDetails.attack ?? '0'}",
+        CardElementPositionType.health =>  "${cardDetails.health ?? '0'}",
+        CardElementPositionType.typeTag =>  "${cardDetails.cardType.text}\n${cardDetails.minionTags.join('/')}",
+        CardElementPositionType.description => cardDetails.description ?? '',
+        CardElementPositionType.gem => convertCardRarityTypeImageUrl(cardDetails.cardRarity),
+        CardElementPositionType.image => File(cardDetails.imageUrl ?? '' ).existsSync() ? cardDetails.imageUrl! : '',
+        _ => ''
+      };
+    },
+    builder: (_, renderResource, _) {
 
-          case CardElementPositionType.name:{
-            renderText = "${cardModel.cardDetails.name}";
-            strokeWidth = 4;
+      debugPrint("[$elementPositionType] it rebuild");
 
-          }
-          case CardElementPositionType.cost:{
-            renderText = "${cardModel.cardDetails.cost}";
-            designFontSize = 36;
-          }
+      
+      String? textFontFamily;
+      FontWeight? fontWeight;
+      double designFontSize = 24;
+      double? strokeWidth;
 
-          case CardElementPositionType.attack:{
-            renderText = "${cardModel.cardDetails.attack}";
-            designFontSize = 36;
-          }
-          case CardElementPositionType.health:{
-            renderText = "${cardModel.cardDetails.health}";
-            designFontSize = 36;
+      AlignmentGeometry? stackTextAlign;
 
-            debugPrint("health Size:${elementLayoutSize * (1 + (cardModel.cardElementPosition[CardElementPositionType.health] ?? ElementPosition()).relativeSize)}");
-          }
-          case CardElementPositionType.inherentTag:{
-            renderText = cardModel.cardDetails.inherentTags.join('/');
-          }
-          case CardElementPositionType.typeTag:{
-            designFontSize = 12;
-            renderText = 
-            "${cardModel.cardDetails.inherentTags.join('/')}"
-            "${cardModel.cardDetails.cardType.name}\n"
-            ;
-            strokeWidth = 0;
-          }
-          case CardElementPositionType.description:{
-            renderText = "${cardModel.cardDetails.description}";
-            designFontSize = 18;
-            strokeWidth = 0;
-          }
+      switch (elementPositionType){
 
-          default:{}
+        case CardElementPositionType.name:{
+          strokeWidth = 4;
+        }
+        case CardElementPositionType.cost:{
+          designFontSize = 36;
         }
 
-        return switch (elementPositionType) {
+        case CardElementPositionType.attack:{
+          designFontSize = 36;
+        }
+        case CardElementPositionType.health:{
+          designFontSize = 36;
+        }
+
+        case CardElementPositionType.typeTag:{
+          designFontSize = 16;
+          textFontFamily = '等线';
+          fontWeight = FontWeight.w100;
+          strokeWidth = 0;
+          stackTextAlign = AlignmentDirectional.topCenter;
+
+        }
+        case CardElementPositionType.description:{
+          
+          designFontSize = 18;
+          strokeWidth = 0;
+          stackTextAlign = AlignmentDirectional.topStart;
+          textFontFamily = '黑体';
+        }
+
+        default:{}
+      }
+
+      return Selector<AppModel, bool>(
+        selector: (_, appModel) => appModel.displayReferenceLine,
+        builder: (context, displayReferenceLine, switchChild) {
+          return Container(
+            decoration: BoxDecoration(
+              border: 
+              context.read<AppModel>().displayReferenceLine ?
+                Border.all(color: const Color(0xFFFF0000)) :
+                null
+              ,
+            ),
+            child: switchChild!
+
+          );
+        },
+        child: switch (elementPositionType) {
 
           CardElementPositionType.cost ||
           CardElementPositionType.attack || 
           CardElementPositionType.health ||
-          CardElementPositionType.typeTag ||
-          CardElementPositionType.inherentTag
+          CardElementPositionType.typeTag
+
           => 
-          AdaptiveFontSizeText(
-
-            text: renderText, 
-
-            designFontSize: designFontSize,
-            strokeWidth: strokeWidth,
-            boxSize: elementLayoutSize * (cardModel.cardElementPosition[elementPositionType] ?? ElementPosition()).relativeSize,
+          ScalableFontSizeText(
             scaleRatio: scaleRatio,
-            //passiveScaleRatio: scaleRatio,
-            //initiativeScaleRatio: cardModel.cardElementPosition[elementPositionType]?.relativeSize ?? 0,
-          ),
-
-          //CardScalableText(
-          //  text: renderText,
-          //  boxSize: (cardModel.cardElementPosition[elementPositionType] ?? ElementPosition()).getAbsoluteSize(cardContainerSize),
-          //  strokeWidth: 3.5,
-          //),
-
-          CardElementPositionType.name ||
-          CardElementPositionType.description
-          => 
-
-          AdaptiveFontSizeText(
-            scaleRatio: scaleRatio,
-            text: renderText,
-            //initiativeScaleRatio: cardModel.cardElementPosition[elementPositionType]?.relativeSize ?? 0,
-            boxSize: elementLayoutSize * (cardModel.cardElementPosition[elementPositionType] ?? ElementPosition()).relativeSize, 
+            fontWeight: fontWeight,
+            text: renderResource, 
             designFontSize: designFontSize,
             strokeWidth: strokeWidth,
 
+            stackTextAlign: stackTextAlign,
+            textFontFamily: textFontFamily,
+            toggleScaleRatio: readjustElementPosition.relativeSize,
           ),
 
-          //  CardElementPositionType.seasonRequirement => const Text('SeasonRequirement'),
+          CardElementPositionType.name => 
+          ScalableFontSizeText(
+            scaleRatio: scaleRatio,
+
+            text: renderResource,
+            designFontSize: designFontSize,
+            strokeWidth: strokeWidth,
+            stackTextAlign: stackTextAlign,
+            textFontFamily: textFontFamily,
+            toggleScaleRatio: readjustElementPosition.relativeSize,
+
+          ),
+
+          CardElementPositionType.description => ScalableFontSizeTextSpan(
+            text: renderResource,
+            designFontSize: designFontSize,
+            scaleRatio: scaleRatio,
+            textFontFamily: textFontFamily,
+            toggleScaleRatio: readjustElementPosition.relativeSize,
+          ),
 
           CardElementPositionType.seasonRequirement => Transform.scale(
-            scale: (cardModel.cardElementPosition[elementPositionType]?.relativeSize ?? 0) + 1,
-            child: Row(
-              
-              children: List.generate(
-                cardModel.cardDetails.seasonRequirement.length, 
-                (index) {
-            
-                  if (cardModel.cardDetails.seasonRequirement.elementAt(index) > 0) {
-            
-                    if (cardModel.cardDetails.seasonRequirement.elementAt(index) >= 3) {
-                      return Row(
-                        spacing: 6,
-                        children: [
-                          Image.asset(
-                            convertElementTypeImageUrl(seasonType: SeasonType.values.elementAt(index)),
-                            fit: BoxFit.cover
-                          ),
-            
-                          Text(
-                            "${cardModel.cardDetails.seasonRequirement.elementAt(index)}",
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-            
-                    else {
-                      return Row(
-                        children: List.generate(
-                          cardModel.cardDetails.seasonRequirement.elementAt(index),
-                          (_) => Image.asset(
-                            convertElementTypeImageUrl(seasonType: SeasonType.values.elementAt(index)),
-                            fit: BoxFit.cover
-                          )
-                        ),
-                      );
-                    }
-                  }
-            
-                  return const SizedBox.shrink();
-            
-                }
-              ),
-            ),
+            scale: (readjustElementPosition.relativeSize) + 1,
+            child: const SeasonElement()
           ),
 
           CardElementPositionType.gem => Transform.scale(
-            scale: (cardModel.cardElementPosition[elementPositionType]?.relativeSize ?? 0) + 1,
+            scale: (readjustElementPosition.relativeSize) + 1,
             child: Image.asset(
-              convertCardRarityTypeImageUrl(cardModel.cardDetails.cardRarity),
+              renderResource
+              ,
               fit: BoxFit.cover
             ),
           ),
 
           CardElementPositionType.image => Transform.scale(
-            scale: (cardModel.cardElementPosition[elementPositionType]?.relativeSize ?? 0) + 1,
-            child: Image.asset(
-              'assets/custom_card_template/doll.jpg',
-              fit: BoxFit.cover
+            scale: (readjustElementPosition.relativeSize) + 1,
+            child: Builder(
+              builder: (_) {
+
+                if (renderResource.isEmpty) return const SizedBox.shrink();
+
+                return Image.file(
+                  File(renderResource),
+                  fit: BoxFit.contain
+                );
+              }
             ),
           ),
+        });
 
-        };
-
-      },
-    ),
+    },
   );
 }

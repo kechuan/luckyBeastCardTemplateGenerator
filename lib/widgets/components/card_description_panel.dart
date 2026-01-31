@@ -24,7 +24,7 @@ class _CardDescriptionPanelState extends State<CardDescriptionPanel> {
     if(mounted){
       final cardModel = context.read<CardModel>();
       descriptionTextEditingControllers.addListener((){
-        cardModel.updateDescription = descriptionTextEditingControllers.text;
+        cardModel.updateDescription(descriptionTextEditingControllers.text);
       });
     }
 
@@ -37,42 +37,16 @@ class _CardDescriptionPanelState extends State<CardDescriptionPanel> {
       spacing: 6,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(t.cardPropPanel.cardDetail.cardDescription),
-
-            Button(
-              child: Text("更新"),
-              onPressed: (){
-                final cardModel = context.read<CardModel>();
-                cardModel.updateDescription = descriptionTextEditingControllers.text;
-              }
-            )
-          ],
-        ),
+        Text(t.cardPropPanel.cardDetail.cardDescription),
 
         SizedBox(
           height: 100,
           child: TextBox(
             controller: descriptionTextEditingControllers,
             maxLines: null,
-            placeholder: "输入卡牌描述,使用{文字}描述特殊行动",
+            placeholder: t.cardPropPanel.cardDetail.cardDescriptionPlaceHolder,
           ),
         ),
-
-        //ValueListenableBuilder(
-        //  valueListenable: descriptionTextEditingControllers,
-        //  builder: (_, descriptionText, _) {
-        //    return Text.rich(
-        //      TextSpan(
-        //        children: [
-        //          parseMarkedText(descriptionText.text)
-        //        ]
-        //      )
-        //    );
-        //  }
-        //),
 
       ],
     );
@@ -100,7 +74,7 @@ TextSpan parseMarkedText(String inputText, {TextStyle? highlightStyle}) {
     spans.add(
       TextSpan(
         text: match.group(1),
-        style: highlightStyle ?? TextStyle(color: Colors.yellow.darker, fontWeight: FontWeight.bold),
+        style: highlightStyle ?? TextStyle(color: Color.fromARGB(255,255,246,197)),
       )
     );
 

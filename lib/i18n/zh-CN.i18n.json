@@ -1,21 +1,43 @@
 {
-	"appTitle": "东方灵麟棋卡牌模板生成器",
+	"appTitle": "东方灵麟棋卡牌生成器",
 
 
+	"navigationPanel":{
+		"name":"导航栏",
+		"palette":"卡牌创作",
+
+		"setting":"设置",
+	
+
+		"exportButton":"导出图片"
+	},
+	
 
 	"cardPropPanel":{
-		"name":	"Card Properties Panel",
+		"name":	"卡牌属性面板",
+
+		"illustrationSelect":{
+			"name":"卡面选择",
+
+			"emptyPromptPart":"拖拽图片文件或文件夹到面板以导入素材",
+			"dragTip":"释放以导入素材",
+			"forbiddenPictureFormatTip":"该文件格式不受支持"
+			
+		},
 
 		"basicProp": {
-			"name":"basicProp",
-			"cardName":"Card Name",
+			"name":"基础属性",
+			
+			"cardName":"卡牌名称",
 			"cardRarity": {
-				"normal":"Normal",
-				"unusual":"Unusual",
-				"rare":"Rare",
-				"mythic":"Mythic"
+				"name":"稀有度",
+
+				"normal":"普通",
+				"unusual":"罕见",
+				"rare":"稀有",
+				"mythic":"传说"
 			},
-			"illustrationPath": "Illustration Path"
+			"illustrationPath": "图片路径"
 			
 		},
 
@@ -28,17 +50,85 @@
 		},
 
 		"cardDetail": {
-			"name":"Card Detail",
+			"name":"卡牌详细设置",
 
-			"cardType": "卡牌类型",
+			"cardType": {
+				"name":"卡牌类型",
+
+				"minion": "使魔",
+				"spellcard": "符卡",
+				"construction": "建筑物"
+
+			},
+
+			"minionTagSetting": "使魔Tag设置",
+			"newMinionTag": "新建",
+			"minionTagPlaceHolder":"点击对应标签以删除",
+
+
 			"cardDescription": "卡牌效果描述",
-			"cardKeyWordSetting": "卡牌关键字设置",
-			"cardTagSetting": "Card Tag Setting"
+			"cardDescriptionPlaceHolder": "输入卡牌描述,使用{文字}描述特殊行动",
+			"cardKeyWordSetting": "卡牌关键字设置"
+
+
+
+		},
+
+		"elementPositions":{
+			"name": "元素方位",
+
+			"displayReferenceLine": "显示参考线",
+
+			"elementToggle": "调整元素",
+			"resetCurrentElement": "重置当前元素调整",
+
+			"cardElementPositionType":{
+				"name":"名称",
+				"image":"卡面",
+				
+				"cost":"灵力花费",
+				"gem":"稀有度",
+				"seasonRequirement":"季语需求",
+				"attack":"攻击力",
+				"health":"生命值",
+				"typeTag":"使魔Tag",
+				"description":"卡牌描述"
+			}
+
 
 		}
 
 
+	},
+
+	"outputPanel":{
+		"name": "图片导出",
+
+		"outputTips":"创作后点击左下角以开始导出流程",
+
+		"imageSize": "图片尺寸",
+		"customSize": "自定义",
+		"width": "宽",
+		"height": "高",
+		"outputPath": "输出路径",
+		"cancel":"取消",
+		"ok": "导出"
+	},
+
+
+	"settingPage":{
+		"name":"设置页",
+
+		"about":"关于",
+
+		"version":"版本信息",
+		"gameOfficalQQGroup":"游戏官方交流群",
+
+		"author": "项目作者",
+		"updateCheck": "检查更新"
 	}
+
+	
 
 
 }

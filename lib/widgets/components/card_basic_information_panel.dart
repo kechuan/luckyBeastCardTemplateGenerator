@@ -25,7 +25,7 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
 
     return Expander(
       initiallyExpanded: true,
-      header: Text("基础属性: name 稀有度 季语类别(混合?) "),
+      header: Text(t.cardPropPanel.basicProp.name),
       content: Column(
         spacing: 12,
         children: [
@@ -38,8 +38,10 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
               Expanded(
                 child: TextBox(
                   controller: cardNameController,
+                  placeholder: t.cardPropPanel.basicProp.cardName,
                   onEditingComplete: () {
-                    cardModel.updateName = cardNameController.text;
+                    //cardModel.updateName = cardNameController.text;
+                    cardModel.updateName(cardNameController.text);
                   },
                 )
               )
@@ -55,7 +57,7 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
 
                   Row(
                     spacing: 12,
-                    children: List.generate(4, (index) {
+                    children: List.generate(SeasonType.values.length-1, (index) {
                         return DecoratedBox(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16)
@@ -70,7 +72,7 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
                               ),
                               uncheckedButtonStyle: ButtonStyle(
                                 backgroundColor: WidgetStateProperty.fromMap({
-                                  WidgetState.disabled: Colors.grey.withValues(alpha: 0.3)
+                                  WidgetState.disabled: FluentTheme.of(context).inactiveBackgroundColor
                                 }),
                                 elevation: WidgetStateProperty.all(1.5),
 
@@ -89,11 +91,11 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
                               (value) {
 
                                 if (seasonState.$1.contains(SeasonType.values[index + 1])) {
-                                  cardModel.updateSeasonType = seasonState.$1.copyWithRemove(element: SeasonType.values[index + 1]).toSet();
+                                  cardModel.updateSeasonType(seasonState.$1.copyWithRemove(element: SeasonType.values[index + 1]).toSet());
                                 }
 
                                 else {
-                                  cardModel.updateSeasonType = seasonState.$1.copyWithAdd(SeasonType.values[index + 1]).toSet();
+                                  cardModel.updateSeasonType(seasonState.$1.copyWithAdd(SeasonType.values[index + 1]).toSet());
 
                                 }
 
@@ -121,9 +123,9 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
                       ToggleSwitch(
                         checked: seasonState.$2,
                         onChanged: (_) {
-                          cardModel.updateMixedType = !seasonState.$2;
+                          cardModel.updateMixedType(!seasonState.$2);
                           if (seasonState.$1.length > 1) {
-                            cardModel.updateSeasonType = {seasonState.$1.first};
+                            cardModel.updateSeasonType({seasonState.$1.first});
                           }
                         }
                       ),
@@ -155,7 +157,7 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
                       CardRarity.values.length,
                       (index) => MenuFlyoutItem(
                         text: Text(CardRarity.values[index].text),
-                        onPressed: () => cardModel.updateRarity = CardRarity.values[index],
+                        onPressed: () => cardModel.updateRarity(CardRarity.values[index]),
                       )
                     ),
                   )
@@ -169,4 +171,5 @@ class _CardBasicInformationPanelState extends State<CardBasicInformationPanel> {
       ),
     );
   }
+
 }

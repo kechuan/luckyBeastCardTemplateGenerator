@@ -21,13 +21,19 @@ class APPRepository{
     ;
                       
 
-
+  static const String version = "0.2.0";
+  static const String gameOfficalQQGroup = "305791725";
+  static const String author = "kechuan";
+  static const String githubRepository = "https://github.com/kechuan/luckyBeastCardTemplateGenerator";
 
 }
 
 /// 基准设计稿尺寸
 const Size kCardDesignSize = Size(500, 700);
 
+const List<String> kIllustrationType = [
+  'jpg', 'jpeg', 'png', 'webp'
+];
 
 const PaddingH6 = EdgeInsetsDirectional.symmetric(horizontal: 6);
 const PaddingH12 = EdgeInsetsDirectional.symmetric(horizontal: 12);

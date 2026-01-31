@@ -9,6 +9,18 @@ extension ImmutableCollectionExtension<E> on Iterable<E> {
     return list;
   }
 
+  List<E> copyWithAddAll(List<E> element, {int? index}) {
+    final list = toList(); // 拷贝原集合
+    if (index != null) {
+      list.insertAll(index, element);
+    } 
+    
+    else {
+      list.addAll(element);
+    }
+    return list;
+  }
+
   List<E> copyWithRemove({E? element, int? index}) {
     final list = toList(); // 拷贝原集合
     if (index != null) {

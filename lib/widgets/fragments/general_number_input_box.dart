@@ -11,6 +11,7 @@ class GeneralNumberInputBox extends StatelessWidget {
 
     this.onChanged,
     this.onEditingComplete,
+    this.enabled
     
 
   });
@@ -20,6 +21,7 @@ class GeneralNumberInputBox extends StatelessWidget {
 
   final Function(String)? onChanged;
   final Function()? onEditingComplete;
+  final bool? enabled;
 
   final TextEditingController textEditingController;
 
@@ -33,6 +35,7 @@ class GeneralNumberInputBox extends StatelessWidget {
         inputFormatters: defaultInputFormatter,
         onEditingComplete: onEditingComplete,
         onChanged: onChanged,
+        enabled: enabled ?? true,
       ),
     );
   }

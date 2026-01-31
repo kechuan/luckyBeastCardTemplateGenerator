@@ -2,8 +2,8 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
-import 'package:lucky_beast_card_template_generator/widgets/fragments/card_description_panel.dart';
-import 'package:lucky_beast_card_template_generator/widgets/views/fluent_minion_prop.dart';
+import 'package:lucky_beast_card_template_generator/widgets/components/card_description_panel.dart';
+import 'package:lucky_beast_card_template_generator/widgets/components/minion_prop_panel.dart';
 import 'package:provider/provider.dart';
 
 class CardDetailsPanel extends StatelessWidget {
@@ -18,7 +18,7 @@ class CardDetailsPanel extends StatelessWidget {
       selector: (_, model) => cardModel.cardDetails.cardType,
       builder: (_, cardType, child) {
         return Expander(
-          header: Text("详细数据"),
+          header: Text(t.cardPropPanel.cardDetail.name),
           content: Column(
             spacing: 12,
             children: [
@@ -27,30 +27,30 @@ class CardDetailsPanel extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 spacing: 6,
                 children: [
-                  Text(t.cardPropPanel.cardDetail.cardType),
+                  Text(t.cardPropPanel.cardDetail.cardType.name),
 				  
-                  ComboBox<String>(
-                    value: cardType.name,
+                  ComboBox<CardType>(
+                    value: cardType,
                     items: [
                       ComboBoxItem(
-                        value: CardType.minion.name,
-                        child: Text("棋子"),
+                        value: CardType.minion,
+                        child: Text(CardType.minion.text),
                       ),
 
                       ComboBoxItem(
-                        value: CardType.spellcard.name,
-                        child: Text("符卡"),
+                        value: CardType.spellcard,
+                        child: Text(CardType.spellcard.text),
+                      ),
+
+                      ComboBoxItem(
+                        value: CardType.construction,
+                        child: Text(CardType.construction.text),
                       ),
 
                     ],
 
                     onChanged: (value) {
-                      cardModel.updateCardType = switch (value) {
-                        "entity" => CardType.minion,
-                        "spellcard" => CardType.spellcard,
-                        _ => CardType.minion,
-                      };
-
+                      cardModel.updateCardType(value!);
                     },
                   ),
                 ],
@@ -58,9 +58,9 @@ class CardDetailsPanel extends StatelessWidget {
 
               if(cardType == CardType.minion) const FluentCardMinionTypeProp(),
 
-			  Divider(),
+              Divider(),
 
-			  CardDescriptionPanel(),
+              CardDescriptionPanel(),
                 
             
             ],

@@ -1,19 +1,36 @@
 {	
 
-	"appTitle": "Lucky Beasts Card Template Generator",
-	"settingPanel":"Setting Panel",
-	"navigation": "Navigation",
-	"imageImport": "Image Import",
+	"appTitle": "Lucky Beasts Card Generator",
+	
+	
+
+	"navigationPanel":{
+		"name":"Navigation",
+		"palette":"Card Creator",
+
+		"setting":"Setting",
+
+		"exportButton":"Export Picture"
+	},
 	
 	"cardPropPanel":{
 		"name":	"Card Properties Panel",
+
+		"illustrationSelect":{
+			"name":"Illustration Select",
+
+			"emptyPromptPart":"Drag Image File or Folder to import the resource",
+			"dragTip":"Release to import the resource",
+			"forbiddenPictureFormatTip":"Unsupported file mimetype"
+
+		},
 
 		"basicProp": {
 			"name":"BasicProp",
 			
 			"cardName":"Card Name",
 			"cardRarity": {
-				"name":"cardRarity",
+				"name":"Card Rarity",
 
 				"normal":"Normal",
 				"unusual":"Unusual",
@@ -35,14 +52,80 @@
 		"cardDetail": {
 			"name":"Card Detail",
 
-			"cardType": "Card Type",
-			"cardDescription": "Card Description",
-			"cardKeyWordSetting": "Card KeyWord Setting",
-			"cardTagSetting": "Card Tag Setting"
+			"cardType": {
+				"name":"Card Type",
 
+				"minion": "Minion",
+				"spellcard": "SpellCard",
+				"construction": "Construction"
+
+			},
+
+
+			"minionTagSetting": "Card Tag Setting",
+			"newMinionTag": "New",
+			"minionTagPlaceHolder":"Click Tag to Remove",
+
+
+			"cardDescription": "Card Description",
+			"cardDescriptionPlaceHolder": "Input Card Description, using '{word}' to declare special action",
+			"cardKeyWordSetting": "Card KeyWord Setting"
+
+		},
+
+		"elementPositions":{
+			"name": "Element Positions",
+
+			"displayReferenceLine": "Display Reference Line",
+
+			"elementToggle": "Element Toggle",
+			"resetCurrentElement": "Reset Current Element",
+
+			"cardElementPositionType":{
+
+				"name":"Name",
+				"image":"Image",
+				
+				"cost":"Cost",
+				"gem":"Gem",
+				"seasonRequirement":"Season",
+				"attack":"Attack",
+				"health":"Health",
+				"typeTag":"TypeTag",
+				"description":"Desc"
+			}
 		}
 
 
+
+	},
+
+	"outputPanel":{
+		"name": "Image Export Panel",
+
+		"outputTips":"Click the corner save button to export",
+
+		"imageSize": "Image Size",
+		"customSize": "Custom Size",
+		"width": "Width",
+		"height": "Height",
+		"outputPath": "Output Path",
+		"cancel":"Cancel",
+		"ok": "Export"
+	},
+
+	"settingPage":{
+		"name":"Setting Page",
+
+		"about":"About",
+
+		"version":"Version",
+		"gameOfficalQQGroup":"Game Offical QQ Group",
+
+		"author": "Author",
+		"updateCheck": "Update Check"
 	}
+
+	
 
 }

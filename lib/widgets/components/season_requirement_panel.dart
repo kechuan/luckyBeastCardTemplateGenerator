@@ -8,14 +8,14 @@ import 'package:lucky_beast_card_template_generator/models/providers/card_model.
 import 'package:lucky_beast_card_template_generator/widgets/fragments/general_number_input_box.dart';
 import 'package:provider/provider.dart';
 
-class SeasonRequirementToggle extends StatefulWidget {
-  const SeasonRequirementToggle({super.key});
+class SeasonRequirementPanel extends StatefulWidget {
+  const SeasonRequirementPanel({super.key});
 
   @override
-  State<SeasonRequirementToggle> createState() => _SeasonRequirementToggleState();
+  State<SeasonRequirementPanel> createState() => _SeasonRequirementPanelState();
 }
 
-class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
+class _SeasonRequirementPanelState extends State<SeasonRequirementPanel> {
 
   late final List<TextEditingController> elementsTextEditingControllers;
   late final TextEditingController manaTextEditingControllers;
@@ -29,7 +29,7 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
       manaTextEditingControllers = TextEditingController(text: cardModel.cardDetails.cost.toString());
 
       manaTextEditingControllers.addListener((){
-        cardModel.updateCost = int.tryParse(manaTextEditingControllers.text) ?? 0;
+        cardModel.updateCost(int.tryParse(manaTextEditingControllers.text) ?? 0);
       });
 
       elementsTextEditingControllers = List.generate(SeasonType.values.length, (index) {
@@ -37,8 +37,9 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
         return TextEditingController(
           text: cardModel.cardDetails.seasonRequirement[index].toString()
         )..addListener((){
-          cardModel.updateSeasonRequirement = 
-            cardModel.cardDetails.seasonRequirement.copyWithReplace(index, int.tryParse(elementsTextEditingControllers[index].text) ?? 0);
+          
+          cardModel.updateSeasonRequirement(cardModel.cardDetails.seasonRequirement.copyWithReplace(index, int.tryParse(elementsTextEditingControllers[index].text) ?? 0));
+
         });
       });
 
@@ -50,7 +51,7 @@ class _SeasonRequirementToggleState extends State<SeasonRequirementToggle> {
   @override
   Widget build(BuildContext context) {
     return Expander(
-      initiallyExpanded: true,
+      initiallyExpanded: false,
       header: Text(t.cardPropPanel.seasonElementSelect.seasonElementRequirement),
       content: Column(
         spacing: 12,

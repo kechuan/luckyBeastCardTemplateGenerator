@@ -54,16 +54,16 @@ class ElementPositionConfigs {
     
     // 卡牌图片：左上角 (50, 150)，大小 400x300
     CardElementPositionType.image: ElementLayoutPosition(
-      x: 50,
-      y: 150,
-      width: 400,
-      height: 300,
+      x: 78,
+      y: 118,
+      width: 345,
+      height: 450,
     ),
     
     // 费用数字：左上角 (20, 20)，大小 50x50
     CardElementPositionType.cost: ElementLayoutPosition(
-      x: 45,
-      y: 42,
+      x: 46,
+      y: 43,
       width: 50,
       height: 50,
     ),
@@ -85,33 +85,28 @@ class ElementPositionConfigs {
     ),
 
 	// 类型标签：左上角 (50, 460)，大小 300x40
-    CardElementPositionType.inherentTag: ElementLayoutPosition(
-      x: 85,
-      y: 405,
-      width: 325,
-      height: 40,
-    ),
+
 
 	// 生命值：右下角 (390, 620)，大小 60x60
     CardElementPositionType.description: ElementLayoutPosition(
-      x: 85,
-      y: 445,
-      width: 325,
-      height: 120,
+      x: 100,
+      y: 407,
+      width: 300,
+      height: 160,
     ),
 
 	// 类型标签：左上角 (50, 460)，大小 300x40
     CardElementPositionType.typeTag: ElementLayoutPosition(
-      x: 200,
+      x: 185,
       y: 600,
-      width: 60,
+      width: 120,
       height: 55,
     ),
 
 	
     CardElementPositionType.gem: ElementLayoutPosition(
-      x: 401,
-      y: 56,
+      x: 402,
+      y: 57,
       width: 46,
       height: 46,
     ),
