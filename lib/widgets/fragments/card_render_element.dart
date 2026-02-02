@@ -50,7 +50,7 @@ class CardRenderElement extends StatelessWidget {
         // 应用微调偏移
         final finalPosition = scaledPosition + (
           readjustElementPosition?.relativePosition ?? Offset.zero
-        );
+          );
 
         debugPrint(
           '[${elementPositionType.name}] '
@@ -95,7 +95,7 @@ Widget renderElement(
 
   //整个Model 就 Map 与 CardDetails 不值得再去拆分。。。
   return Selector<CardModel, String>(
-    selector: (_, cardModel){
+    selector: (_, cardModel) {
       final cardDetails = cardModel.cardDetails;
 
       return switch (elementPositionType){
@@ -103,10 +103,10 @@ Widget renderElement(
         CardElementPositionType.cost =>  "${cardDetails.cost ?? '0'}",
         CardElementPositionType.attack =>  "${cardDetails.attack ?? '0'}",
         CardElementPositionType.health =>  "${cardDetails.health ?? '0'}",
-        CardElementPositionType.typeTag =>  "${cardDetails.cardType.text}\n${cardDetails.minionTags.join('/')}",
+        CardElementPositionType.typeTag =>  "${cardDetails.cardType.text}${cardDetails.familliarTags.isNotEmpty ? '\n' : ''}${cardDetails.familliarTags.join('/')}",
         CardElementPositionType.description => cardDetails.description ?? '',
         CardElementPositionType.gem => convertCardRarityTypeImageUrl(cardDetails.cardRarity),
-        CardElementPositionType.image => File(cardDetails.imageUrl ?? '' ).existsSync() ? cardDetails.imageUrl! : '',
+        CardElementPositionType.image => File(cardDetails.imageUrl ?? '').existsSync() ? cardDetails.imageUrl! : '',
         _ => ''
       };
     },
@@ -114,7 +114,6 @@ Widget renderElement(
 
       debugPrint("[$elementPositionType] it rebuild");
 
-      
       String? textFontFamily;
       FontWeight? fontWeight;
       double designFontSize = 24;
@@ -125,7 +124,10 @@ Widget renderElement(
       switch (elementPositionType){
 
         case CardElementPositionType.name:{
-          strokeWidth = 4;
+          designFontSize = 28;
+          strokeWidth = 3.8;
+          textFontFamily = '黑体';
+          fontWeight = FontWeight.w100;
         }
         case CardElementPositionType.cost:{
           designFontSize = 36;
@@ -139,15 +141,16 @@ Widget renderElement(
         }
 
         case CardElementPositionType.typeTag:{
-          designFontSize = 16;
+
+          designFontSize = 18;
           textFontFamily = '等线';
-          fontWeight = FontWeight.w100;
+          fontWeight = FontWeight.w400;
           strokeWidth = 0;
           stackTextAlign = AlignmentDirectional.topCenter;
 
         }
         case CardElementPositionType.description:{
-          
+
           designFontSize = 18;
           strokeWidth = 0;
           stackTextAlign = AlignmentDirectional.topStart;
@@ -180,16 +183,18 @@ Widget renderElement(
           CardElementPositionType.typeTag
 
           => 
-          ScalableFontSizeText(
-            scaleRatio: scaleRatio,
-            fontWeight: fontWeight,
-            text: renderResource, 
-            designFontSize: designFontSize,
-            strokeWidth: strokeWidth,
+          Center(
+            child: ScalableFontSizeText(
+              scaleRatio: scaleRatio,
+              fontWeight: fontWeight,
+              text: renderResource, 
+              designFontSize: designFontSize,
+              strokeWidth: strokeWidth,
 
-            stackTextAlign: stackTextAlign,
-            textFontFamily: textFontFamily,
-            toggleScaleRatio: readjustElementPosition.relativeSize,
+              stackTextAlign: stackTextAlign,
+              textFontFamily: textFontFamily,
+              toggleScaleRatio: readjustElementPosition.relativeSize,
+            ),
           ),
 
           CardElementPositionType.name => 
@@ -205,12 +210,15 @@ Widget renderElement(
 
           ),
 
-          CardElementPositionType.description => ScalableFontSizeTextSpan(
-            text: renderResource,
-            designFontSize: designFontSize,
-            scaleRatio: scaleRatio,
-            textFontFamily: textFontFamily,
-            toggleScaleRatio: readjustElementPosition.relativeSize,
+          CardElementPositionType.description => Padding(
+            padding: PaddingH12,
+            child: ScalableFontSizeTextSpan(
+              text: renderResource,
+              designFontSize: designFontSize,
+              scaleRatio: scaleRatio,
+              textFontFamily: textFontFamily,
+              toggleScaleRatio: readjustElementPosition.relativeSize,
+            ),
           ),
 
           CardElementPositionType.seasonRequirement => Transform.scale(
@@ -221,9 +229,33 @@ Widget renderElement(
           CardElementPositionType.gem => Transform.scale(
             scale: (readjustElementPosition.relativeSize) + 1,
             child: Image.asset(
-              renderResource
-              ,
+              renderResource,
               fit: BoxFit.cover
+            ),
+          ),
+
+          CardElementPositionType.maskLayer => Transform.scale(
+            scale: (readjustElementPosition.relativeSize) + 1,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.02),
+                    Colors.black.withValues(alpha: 0.3),
+                    Colors.black.withValues(alpha: 0.6),
+                    Colors.black.withValues(alpha: 0.8),
+            
+                  ],
+                  stops: [
+                    0.2,
+                    0.4,
+                    0.7,
+                    1
+                  ]
+                )
+              ),
             ),
           ),
 
@@ -236,8 +268,9 @@ Widget renderElement(
 
                 return Image.file(
                   File(renderResource),
-                  fit: BoxFit.contain
+                  fit: BoxFit.contain,
                 );
+
               }
             ),
           ),

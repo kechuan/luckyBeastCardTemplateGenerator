@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:lucky_beast_card_template_generator/internal/mdi_extension_icons.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
-import 'package:lucky_beast_card_template_generator/widgets/components/minion_tag_panel.dart';
+import 'package:lucky_beast_card_template_generator/widgets/components/familliar_tag_panel.dart';
 import 'package:lucky_beast_card_template_generator/widgets/fragments/general_number_input_box.dart';
 import 'package:provider/provider.dart';
 

@@ -55,21 +55,32 @@
 			"cardType": {
 				"name":"Card Type",
 
-				"minion": "Minion",
+				"familliar": "Familliar",
 				"spellcard": "SpellCard",
+				"player": "Player",
 				"construction": "Construction"
 
 			},
 
 
-			"minionTagSetting": "Card Tag Setting",
-			"newMinionTag": "New",
-			"minionTagPlaceHolder":"Click Tag to Remove",
+			"familliarTagSetting": "Card Tag Setting",
+			"newFamilliarTag": "New",
+			"familliarTagPlaceHolder":"Click Tag to Remove",
 
 
 			"cardDescription": "Card Description",
 			"cardDescriptionPlaceHolder": "Input Card Description, using '{word}' to declare special action",
-			"cardKeyWordSetting": "Card KeyWord Setting"
+			"cardKeyWordSetting": "Card KeyWord Setting",
+
+
+			"keyWordDescription":{
+				"name":"Key Word Description",
+
+				"displayKeyWordDescription":"Display KeyWord Description",
+				"placeHolder":"Edit the Keyword to show panel"
+			}
+
+
 
 		},
 
@@ -85,7 +96,7 @@
 
 				"name":"Name",
 				"image":"Image",
-				
+				"maskLayer":"Mask Layer",
 				"cost":"Cost",
 				"gem":"Gem",
 				"seasonRequirement":"Season",
@@ -105,7 +116,7 @@
 
 		"outputTips":"Click the corner save button to export",
 
-		"imageSize": "Image Size",
+		"recommendImageScale": "Recommend Image Scale",
 		"customSize": "Custom Size",
 		"width": "Width",
 		"height": "Height",

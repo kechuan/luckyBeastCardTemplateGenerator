@@ -3,7 +3,8 @@ import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_description_panel.dart';
-import 'package:lucky_beast_card_template_generator/widgets/components/minion_prop_panel.dart';
+import 'package:lucky_beast_card_template_generator/widgets/components/description_keyword_panel.dart';
+import 'package:lucky_beast_card_template_generator/widgets/components/familliar_prop_panel.dart';
 import 'package:provider/provider.dart';
 
 class CardDetailsPanel extends StatelessWidget {
@@ -31,24 +32,16 @@ class CardDetailsPanel extends StatelessWidget {
 				  
                   ComboBox<CardType>(
                     value: cardType,
-                    items: [
-                      ComboBoxItem(
-                        value: CardType.minion,
-                        child: Text(CardType.minion.text),
-                      ),
+                    items: List.generate(
+                      CardType.values.length, (index){
+                        return ComboBoxItem(
+                          value: CardType.values[index],
+                          child: Text(CardType.values[index].text),
+                        );
 
-                      ComboBoxItem(
-                        value: CardType.spellcard,
-                        child: Text(CardType.spellcard.text),
-                      ),
-
-                      ComboBoxItem(
-                        value: CardType.construction,
-                        child: Text(CardType.construction.text),
-                      ),
-
-                    ],
-
+                      }
+                    ),
+      
                     onChanged: (value) {
                       cardModel.updateCardType(value!);
                     },
@@ -56,11 +49,15 @@ class CardDetailsPanel extends StatelessWidget {
                 ],
               ),
 
-              if(cardType == CardType.minion) const FluentCardMinionTypeProp(),
+              if(cardType == CardType.familliar) const FluentCardMinionTypeProp(),
 
               Divider(),
 
               CardDescriptionPanel(),
+
+              Divider(),
+
+              DescriptionKeywordPanel()
                 
             
             ],

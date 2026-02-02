@@ -37,14 +37,15 @@ enum SeasonType{
 }
 
 enum CardType{
-  minion,
+  familliar,
   spellcard,
+  player,
   construction,
   ;
 
   const CardType();
 
-  bool isChess() => this == CardType.minion;
+  bool isChess() => this == CardType.familliar || this == CardType.player;
 
   String get text => t['cardPropPanel.cardDetail.cardType.$name'] ?? "";
 
@@ -70,7 +71,9 @@ enum CardRarity{
 ///与stack布局的顺序挂钩
 enum CardElementPositionType{
   image,
+  maskLayer,
   description,
+  
   name,
   typeTag,
 

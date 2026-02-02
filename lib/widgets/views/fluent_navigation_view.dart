@@ -9,7 +9,8 @@ import 'package:lucky_beast_card_template_generator/internal/convert.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
-import 'package:lucky_beast_card_template_generator/widgets/fragments/fluent_dialog.dart';
+import 'package:lucky_beast_card_template_generator/widgets/fragments/fluent_export_card_picture_dialog.dart';
+import 'package:lucky_beast_card_template_generator/widgets/fragments/keyword_description.dart';
 import 'package:lucky_beast_card_template_generator/widgets/views/fluent_main_view.dart';
 import 'package:lucky_beast_card_template_generator/widgets/views/picture_preview_view.dart';
 import 'package:provider/provider.dart';
@@ -77,11 +78,17 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                   final appModel = context.read<AppModel>();
                   final cardModel = context.read<CardModel>();
 
-                  await showDialog<(Future<Uint8List>?, String)>(
+                  await showDialog< (Future<Uint8List>?, String)>(
                     context: context,
                     barrierDismissible: true,
-                    builder: (_) => FluentDialog(
-                      confirmAction: (size)  {
+                    builder: (_) => FluentExportCardPictureDialog(
+                      confirmAction: (customSize) {
+
+                        final expandedSwitch = cardModel.isDescriptionExpanded;
+                        final keyWordDescriptionsMap = cardModel.keyWordDescriptions;
+
+                        final customSizeWidth = customSize?.width;
+                        final customSizeHeight = customSize?.height;
 
                         return captureInvisibleWidget(
                           widget: MultiProvider(
@@ -90,24 +97,66 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                               ChangeNotifierProvider.value(value: cardModel),
                             ],
                             child: SizedBox(
-                              width: size?.width ?? kCardDesignSize.width,
-                              height: size?.height ?? kCardDesignSize.height,
-                              child: CardContent(cardContainerSize: size ?? kCardDesignSize)
+
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                  SizedBox(
+                                    width: customSizeWidth ?? kCardDesignSize.width,
+                                    height: customSizeHeight ?? kCardDesignSize.height,
+                                    child: CardContent(cardContainerSize: customSize ?? kCardDesignSize)
+                                  ),
+
+                                  if(
+                                  expandedSwitch && 
+                                    keyWordDescriptionsMap.isNotEmpty
+                                  )
+
+                                  Transform.scale(
+                                    // 500/700 => 1.2
+                                    scale: 1.2 + ((customSizeWidth ?? kCardDesignSize.width) / (kCardDesignSize.width) - 1),
+
+                                    child: Column(
+                                      spacing: 6,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: List.generate(
+                                        keyWordDescriptionsMap.length,
+                                        (index) {
+
+                                          if (keyWordDescriptionsMap.values.elementAtOrNull(index)?.isEmpty == true) {
+                                            return const SizedBox.shrink();
+                                          }
+
+                                          return KeyWordDescription(
+                                            keyWord: '${keyWordDescriptionsMap.keys.elementAtOrNull(index)}',
+                                            descrpition: "${keyWordDescriptionsMap.values.elementAtOrNull(index)}",
+                                          );
+                                        }
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                          size: size
+                          size: Size(
+                            (customSize ?? kCardDesignSize).width + (expandedSwitch && keyWordDescriptionsMap.isNotEmpty ? ((customSizeWidth ?? kCardDesignSize.width) / (kCardDesignSize.width) * 200) : 0),
+                            (customSize ?? kCardDesignSize).height
+                          )
+
                         );
                       },
                     )
                   ).then((data) async {
-                    if (data != null) {
-                      saveAsOnWindows(
-                        data.$2,
-                        bytes: await data.$1,
-                        cardName: cardModel.cardDetails.name
-                      );
-                    }
-                  });
+                        if (data != null) {
+                          saveAsOnWindows(
+                            data.$2,
+                            bytes: await data.$1,
+                            cardName: cardModel.cardDetails.name
+                          );
+                        }
+                      });
 
                 },
               ),

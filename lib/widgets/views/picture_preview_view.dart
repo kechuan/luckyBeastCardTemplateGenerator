@@ -5,6 +5,7 @@ import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/fragments/card_render_element.dart';
+import 'package:lucky_beast_card_template_generator/widgets/fragments/keyword_description.dart';
 import 'package:provider/provider.dart';
 
 class PicturePreviewView extends StatelessWidget {
@@ -27,26 +28,58 @@ class PicturePreviewView extends StatelessWidget {
 
         final displaySize = Size(displayWidth, displayHeight);
 
-        return Center(
-          child: Container(
-            width: displayWidth,
-            height: displayHeight,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: SizedBox(
-              width: kCardDesignSize.width,
-              height: kCardDesignSize.height,
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 12,
+          children: [
+
+            Container(
+              width: displayWidth,
+              height: displayHeight,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
               child: CardContent(cardContainerSize: displaySize),
             ),
-          ),
+
+            Selector<CardModel, bool>(
+              selector: (_, cardModel) => cardModel.isDescriptionExpanded,
+              builder: (_, isDescriptionExpanded, _) {
+                if(!isDescriptionExpanded) return const SizedBox.shrink();
+                
+                return Selector<CardModel, Map<String, String>>(
+                  selector: (_, cardModel) => cardModel.keyWordDescriptions,
+                  builder: (_, keyWordDescriptions, _) {
+                    return Column(
+                      spacing: 6,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        keyWordDescriptions.length,
+                        (index) {
+
+                          if (keyWordDescriptions.values.elementAtOrNull(index)?.isEmpty == true) {
+                            return const SizedBox.shrink();
+                          }
+
+                          return KeyWordDescription(
+                            keyWord: '${keyWordDescriptions.keys.elementAtOrNull(index)}',
+                            descrpition: "${keyWordDescriptions.values.elementAtOrNull(index)}",
+                          );
+                        }
+                      ),
+                    );
+                  }
+                );
+              }
+            )
+          ],
         );
       },
     );
@@ -72,46 +105,42 @@ class _CardContentState extends State<CardContent> {
     final cardModel = context.read<CardModel>();
 
     return Selector<CardModel, bool>(
-      selector: (_, cardModel) => cardModel.cardDetails.cardType.isChess() ,
+      selector: (_, cardModel) => cardModel.cardDetails.cardType.isChess(),
       builder: (_, isChess, _) {
 
         return Stack(
           children: [
             // 背景层
-            Selector<CardModel, (Set<SeasonType>, CardType)>(
+            Selector<CardModel,  (Set<SeasonType>, CardType)>(
               selector: (_, model) => (
-                model.cardDetails.seasonTypeSet, 
-                model.cardDetails.cardType
+              model.cardDetails.seasonTypeSet, 
+              model.cardDetails.cardType
               ),
               builder: (_, data, _) {
+
+                final cardBackgroundPath = convertCardTypeImageUrl(
+                  seasonTypeSet: data.$1, 
+                  cardType: data.$2
+                );
+
+                if (cardBackgroundPath.isEmpty) {
+                  return Center(
+                    child: const Text("¯\\_(ツ)_/¯", style: TextStyle(fontSize: 24))
+                  );
+                }
+
+                //一切元素的基准定位
                 return Positioned.fill(
-                  child: Builder(
-                    builder: (_) {
-
-                      final cardBackgroundPath = convertCardTypeImageUrl(
-                        seasonTypeSet: data.$1, 
-                        cardType: data.$2
-                      );
-
-                      if(cardBackgroundPath.isEmpty){
-                        return Center(
-                          child: const Text("¯\\_(ツ)_/¯",style: TextStyle(fontSize: 24))
-                        );
-                      }
-
-                      return Image.asset(
-                        convertCardTypeImageUrl(
-                          seasonTypeSet: data.$1, 
-                          cardType: data.$2
-                        ),
-                        fit: BoxFit.fill,
-                      );
-                    }
+                  child: Image.asset(
+                    convertCardTypeImageUrl(
+                      seasonTypeSet: data.$1, 
+                      cardType: data.$2
+                    ),
+                    fit: BoxFit.fill,
                   ),
                 );
               }
             ),
-
 
             //数据层
             ...cardModel.cardElementPosition.keys.map((elementType) {
@@ -141,7 +170,7 @@ class _CardContentState extends State<CardContent> {
                 }
 
                 return sizeInfoWidget!;
-                
+
               },
               child: Positioned(
                 bottom: 8,
@@ -163,8 +192,7 @@ class _CardContentState extends State<CardContent> {
                 ),
               ),
             ),
-          
-          
+
           ],
         );
       }

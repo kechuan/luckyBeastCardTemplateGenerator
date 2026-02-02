@@ -103,12 +103,10 @@ class ScalableFontSizeTextSpan extends ScalableFontSizeText {
 
     return Transform.scale(
       scale: 1+toggleScaleRatio,
-      //width: max(0,boxSize.width),
-      //height: max(0,boxSize.height),
       child: Text.rich(
         TextSpan(
           children: [
-            parseMarkedText(text)
+            parseMarkedText(context,text)
           ]
         ),
         style: TextStyle(

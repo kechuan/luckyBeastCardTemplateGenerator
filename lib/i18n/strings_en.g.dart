@@ -103,8 +103,8 @@ class TranslationsOutputPanelEn {
 	/// en: 'Click the corner save button to export'
 	String get outputTips => 'Click the corner save button to export';
 
-	/// en: 'Image Size'
-	String get imageSize => 'Image Size';
+	/// en: 'Recommend Image Scale'
+	String get recommendImageScale => 'Recommend Image Scale';
 
 	/// en: 'Custom Size'
 	String get customSize => 'Custom Size';
@@ -225,13 +225,13 @@ class TranslationsCardPropPanelCardDetailEn {
 	late final TranslationsCardPropPanelCardDetailCardTypeEn cardType = TranslationsCardPropPanelCardDetailCardTypeEn._(_root);
 
 	/// en: 'Card Tag Setting'
-	String get minionTagSetting => 'Card Tag Setting';
+	String get familliarTagSetting => 'Card Tag Setting';
 
 	/// en: 'New'
-	String get newMinionTag => 'New';
+	String get newFamilliarTag => 'New';
 
 	/// en: 'Click Tag to Remove'
-	String get minionTagPlaceHolder => 'Click Tag to Remove';
+	String get familliarTagPlaceHolder => 'Click Tag to Remove';
 
 	/// en: 'Card Description'
 	String get cardDescription => 'Card Description';
@@ -241,6 +241,8 @@ class TranslationsCardPropPanelCardDetailEn {
 
 	/// en: 'Card KeyWord Setting'
 	String get cardKeyWordSetting => 'Card KeyWord Setting';
+
+	late final TranslationsCardPropPanelCardDetailKeyWordDescriptionEn keyWordDescription = TranslationsCardPropPanelCardDetailKeyWordDescriptionEn._(_root);
 }
 
 // Path: cardPropPanel.elementPositions
@@ -301,14 +303,35 @@ class TranslationsCardPropPanelCardDetailCardTypeEn {
 	/// en: 'Card Type'
 	String get name => 'Card Type';
 
-	/// en: 'Minion'
-	String get minion => 'Minion';
+	/// en: 'Familliar'
+	String get familliar => 'Familliar';
 
 	/// en: 'SpellCard'
 	String get spellcard => 'SpellCard';
 
+	/// en: 'Player'
+	String get player => 'Player';
+
 	/// en: 'Construction'
 	String get construction => 'Construction';
+}
+
+// Path: cardPropPanel.cardDetail.keyWordDescription
+class TranslationsCardPropPanelCardDetailKeyWordDescriptionEn {
+	TranslationsCardPropPanelCardDetailKeyWordDescriptionEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Key Word Description'
+	String get name => 'Key Word Description';
+
+	/// en: 'Display KeyWord Description'
+	String get displayKeyWordDescription => 'Display KeyWord Description';
+
+	/// en: 'Edit the Keyword to show panel'
+	String get placeHolder => 'Edit the Keyword to show panel';
 }
 
 // Path: cardPropPanel.elementPositions.cardElementPositionType
@@ -324,6 +347,9 @@ class TranslationsCardPropPanelElementPositionsCardElementPositionTypeEn {
 
 	/// en: 'Image'
 	String get image => 'Image';
+
+	/// en: 'Mask Layer'
+	String get maskLayer => 'Mask Layer';
 
 	/// en: 'Cost'
 	String get cost => 'Cost';
@@ -378,21 +404,26 @@ extension on Translations {
 			'cardPropPanel.seasonElementSelect.seasonElementRequirement' => 'Season Element Requirement',
 			'cardPropPanel.cardDetail.name' => 'Card Detail',
 			'cardPropPanel.cardDetail.cardType.name' => 'Card Type',
-			'cardPropPanel.cardDetail.cardType.minion' => 'Minion',
+			'cardPropPanel.cardDetail.cardType.familliar' => 'Familliar',
 			'cardPropPanel.cardDetail.cardType.spellcard' => 'SpellCard',
+			'cardPropPanel.cardDetail.cardType.player' => 'Player',
 			'cardPropPanel.cardDetail.cardType.construction' => 'Construction',
-			'cardPropPanel.cardDetail.minionTagSetting' => 'Card Tag Setting',
-			'cardPropPanel.cardDetail.newMinionTag' => 'New',
-			'cardPropPanel.cardDetail.minionTagPlaceHolder' => 'Click Tag to Remove',
+			'cardPropPanel.cardDetail.familliarTagSetting' => 'Card Tag Setting',
+			'cardPropPanel.cardDetail.newFamilliarTag' => 'New',
+			'cardPropPanel.cardDetail.familliarTagPlaceHolder' => 'Click Tag to Remove',
 			'cardPropPanel.cardDetail.cardDescription' => 'Card Description',
 			'cardPropPanel.cardDetail.cardDescriptionPlaceHolder' => 'Input Card Description, using \'{word}\' to declare special action',
 			'cardPropPanel.cardDetail.cardKeyWordSetting' => 'Card KeyWord Setting',
+			'cardPropPanel.cardDetail.keyWordDescription.name' => 'Key Word Description',
+			'cardPropPanel.cardDetail.keyWordDescription.displayKeyWordDescription' => 'Display KeyWord Description',
+			'cardPropPanel.cardDetail.keyWordDescription.placeHolder' => 'Edit the Keyword to show panel',
 			'cardPropPanel.elementPositions.name' => 'Element Positions',
 			'cardPropPanel.elementPositions.displayReferenceLine' => 'Display Reference Line',
 			'cardPropPanel.elementPositions.elementToggle' => 'Element Toggle',
 			'cardPropPanel.elementPositions.resetCurrentElement' => 'Reset Current Element',
 			'cardPropPanel.elementPositions.cardElementPositionType.name' => 'Name',
 			'cardPropPanel.elementPositions.cardElementPositionType.image' => 'Image',
+			'cardPropPanel.elementPositions.cardElementPositionType.maskLayer' => 'Mask Layer',
 			'cardPropPanel.elementPositions.cardElementPositionType.cost' => 'Cost',
 			'cardPropPanel.elementPositions.cardElementPositionType.gem' => 'Gem',
 			'cardPropPanel.elementPositions.cardElementPositionType.seasonRequirement' => 'Season',
@@ -402,7 +433,7 @@ extension on Translations {
 			'cardPropPanel.elementPositions.cardElementPositionType.description' => 'Desc',
 			'outputPanel.name' => 'Image Export Panel',
 			'outputPanel.outputTips' => 'Click the corner save button to export',
-			'outputPanel.imageSize' => 'Image Size',
+			'outputPanel.recommendImageScale' => 'Recommend Image Scale',
 			'outputPanel.customSize' => 'Custom Size',
 			'outputPanel.width' => 'Width',
 			'outputPanel.height' => 'Height',

@@ -1,0 +1,24 @@
+{
+	"files": [
+		{
+			"path": "lib/widgets/views/fluent_navigation_view.dart",
+			"bookmarks": [
+				{
+					"line": 92,
+					"column": 40,
+					"label": "captureInvisibleWidget —— 注入Widget保存"
+				}
+			]
+		},
+		{
+			"path": "lib/models/informations/card_positions.dart",
+			"bookmarks": [
+				{
+					"line": 44,
+					"column": 0,
+					"label": "位置配置清单 —— ElementPositionConfigs"
+				}
+			]
+		}
+	]
+}

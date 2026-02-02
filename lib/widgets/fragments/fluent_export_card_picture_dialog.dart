@@ -9,13 +9,31 @@ import 'package:lucky_beast_card_template_generator/models/providers/app_model.d
 import 'package:lucky_beast_card_template_generator/widgets/fragments/general_number_input_box.dart';
 import 'package:provider/provider.dart';
 
-class FluentDialog extends StatelessWidget {
-  const FluentDialog({
+class FluentExportCardPictureDialog extends StatefulWidget {
+  const FluentExportCardPictureDialog({
     super.key,
     this.confirmAction,
   });
 
   final Future<Uint8List>? Function(Size?)? confirmAction;
+
+  @override
+  State<FluentExportCardPictureDialog> createState() => _FluentExportCardPictureDialogState();
+}
+
+class _FluentExportCardPictureDialogState extends State<FluentExportCardPictureDialog> {
+
+    
+  final outputImageWidthController = TextEditingController(text: kCardDesignSize.width.round().toString());
+  final outputImageHeightController = TextEditingController(text: kCardDesignSize.height.round().toString());
+
+  @override
+  void initState() {
+    outputImageWidthController.addListener((){
+      outputImageHeightController.text = ("${(double.tryParse(outputImageWidthController.text) ?? 0) * 1.4}");
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +43,8 @@ class FluentDialog extends StatelessWidget {
       context.read<AppModel>().importDirectoryPath ?? (Directory('').absolute.path).toString()
     );
 
-    final outputImageWidthController = TextEditingController(text: kCardDesignSize.width.toString());
-    final outputImageHeightController = TextEditingController(text: kCardDesignSize.height.toString());
+
+
 
     ValueNotifier<bool> customSizeNotifier = ValueNotifier(false);
 
@@ -74,18 +92,18 @@ class FluentDialog extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(t.outputPanel.imageSize, style: TextStyle(color: FluentTheme.of(context).inactiveColor),),
+                Text(t.outputPanel.recommendImageScale, style: TextStyle(color: FluentTheme.of(context).inactiveColor),),
 
                 Row(
 
                   children: [
                     SizedBox(
-                      width: 60,
-                      child: Center(child: Text(t.outputPanel.width))
+                      width: 70,
+                      child: Center(child: Text('1x ${t.outputPanel.width}'))
                     ),
                     SizedBox(
-                      width: 60,
-                      child: Center(child: Text(t.outputPanel.height))
+                      width: 70,
+                      child: Center(child: Text('1.4x ${t.outputPanel.height}'))
                     ),
                   ],
                 )
@@ -152,7 +170,10 @@ class FluentDialog extends StatelessWidget {
 
                 ],
               ),
-            )
+              
+            ),
+
+            
           ],
         ),
       ),
@@ -169,7 +190,7 @@ class FluentDialog extends StatelessWidget {
 
             Navigator.of(context).pop(
               (
-              confirmAction?.call(
+              widget.confirmAction?.call(
                 customSizeNotifier.value ?
                   Size(
                     double.tryParse(outputImageWidthController.text) ?? 0,

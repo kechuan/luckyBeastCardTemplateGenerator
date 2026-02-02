@@ -19,15 +19,15 @@ void main() async {
     titleBarStyle: TitleBarStyle.hidden,
     windowButtonVisibility: false,
     minimumSize: Size(800, 600),
-    size: Size(1000, 800),
+    size: Size(1200, 800),
     backgroundColor: Colors.transparent
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.setAsFrameless(); 
-      await windowManager.show();
-      await windowManager.focus();
-    });
+    await windowManager.setAsFrameless(); 
+    await windowManager.show();
+    await windowManager.focus();
+  });
 
   runApp(
     TranslationProvider(child: const MyApp())
@@ -57,15 +57,15 @@ class MyApp extends StatelessWidget {
               locale: LocaleSettings.currentLocale.flutterLocale,
               localizationsDelegates: [
                 FluentLocalizations.delegate,
-                
+
               ],
               supportedLocales: AppLocaleUtils.supportedLocales,
               theme: FluentThemeData(
                 brightness: Brightness.light,
                 accentColor: AccentColor.swatch(
-                  {
-                    'normal': context.watch<AppModel>().themeColorType.color,
-                  }
+                {
+                  'normal': context.watch<AppModel>().themeColorType.color,
+                }
                 ),
 
                 scaffoldBackgroundColor: context.watch<AppModel>().themeColorType.color.withValues(alpha: 0.3),

@@ -32,10 +32,10 @@ class _MinionTagTypePanelState extends State<MinionTagTypePanel> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(t.cardPropPanel.cardDetail.minionTagSetting),
+              Text(t.cardPropPanel.cardDetail.familliarTagSetting),
 
               Button(
-                child: Text(t.cardPropPanel.cardDetail.newMinionTag),
+                child: Text(t.cardPropPanel.cardDetail.newFamilliarTag),
                 onPressed: () {
                   addTab(tagInputController.text);
                   tagInputController.clear();
@@ -45,7 +45,7 @@ class _MinionTagTypePanelState extends State<MinionTagTypePanel> {
           ),
 
           Selector<CardModel, int>(
-            selector: (_, cardModel) => cardModel.cardDetails.minionTags.length,
+            selector: (_, cardModel) => cardModel.cardDetails.familliarTags.length,
             builder: (_, minionTypeLength, _) {
               return AnimatedSize(
                 duration: const Duration(milliseconds: 300),
@@ -55,7 +55,7 @@ class _MinionTagTypePanelState extends State<MinionTagTypePanel> {
                     children: [
 
                       Selector<CardModel, List<String>>(
-                        selector: (_, cardModel) => cardModel.cardDetails.minionTags,
+                        selector: (_, cardModel) => cardModel.cardDetails.familliarTags,
                         builder: (_, minionTags, _) {
                           return Wrap(
                             spacing: 8,
@@ -94,7 +94,7 @@ class _MinionTagTypePanelState extends State<MinionTagTypePanel> {
             height: 40,
             child: TextBox(
               controller: tagInputController,
-              placeholder: t.cardPropPanel.cardDetail.minionTagPlaceHolder,
+              placeholder: t.cardPropPanel.cardDetail.familliarTagPlaceHolder,
               onSubmitted: (value) {
                 addTab(tagInputController.text);
                 tagInputController.clear();
@@ -111,7 +111,7 @@ class _MinionTagTypePanelState extends State<MinionTagTypePanel> {
     final positionRegExp = RegExp(r'\d+:.*');
 
     final cardModel = context.read<CardModel>();
-    final minionTags = [...cardModel.cardDetails.minionTags];
+    final minionTags = [...cardModel.cardDetails.familliarTags];
 
     if (text.contains(positionRegExp)) {
       final position = int.parse(text.split(':')[0]);
@@ -139,7 +139,7 @@ class _MinionTagTypePanelState extends State<MinionTagTypePanel> {
   void removeTab(int index) {
 
     final cardModel = context.read<CardModel>();
-    final minionTags = [...cardModel.cardDetails.minionTags];
+    final minionTags = [...cardModel.cardDetails.familliarTags];
 
     minionTags.removeAt(index);
 

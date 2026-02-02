@@ -12,7 +12,7 @@ class AppModel extends ChangeNotifier {
   //AppLocale appLocale;
   int currentItemIndex = 0;
 
-  SeasonType themeColorType = SeasonType.autumn;
+  SeasonType themeColorType = SeasonType.winter;
   ThemeMode themeMode = ThemeMode.light;
 
   Set<String> illustrationPaths = {};

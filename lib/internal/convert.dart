@@ -11,23 +11,22 @@ import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 
 String convertCardTypeImageUrl({
   Set<SeasonType> seasonTypeSet = const {},
-  CardType cardType = CardType.minion,
+  CardType cardType = CardType.familliar,
 }) {
 
   String targetResourcePath = "";
   String cardTypeSuffix = "";
 
   switch (cardType) {
-    case CardType.minion:{
+    case CardType.familliar || CardType.player:{
       targetResourcePath = APPRepository.officalMinionTemplate;
-      cardTypeSuffix = CardType.minion.name;
+      cardTypeSuffix = CardType.familliar.name;
 
     }
 
     case CardType.spellcard || CardType.construction:{
       targetResourcePath = APPRepository.officalSpellTemplate;
       cardTypeSuffix = CardType.spellcard.name;
-
     }
 
   }

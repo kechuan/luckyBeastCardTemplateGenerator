@@ -10,11 +10,15 @@ class CardModel extends ChangeNotifier{
 
   CardDetails cardDetails = CardDetails();
 
+  bool isDescriptionExpanded = false;
+
   Map<CardElementPositionType, ElementPosition> cardElementPosition = {
     for (final cardElementPositionType in CardElementPositionType.values) cardElementPositionType : ElementPosition(),
   };
 
-  void updateCardImageUrl(String? newImageUrl) {
+  Map<String,String>keyWordDescriptions = const {};
+
+  void updateCardImageUrl(String newImageUrl) {
     updateCardDetails(
       cardDetails.copyWith(
         imageUrl: newImageUrl
@@ -107,7 +111,7 @@ class CardModel extends ChangeNotifier{
   void updateminionTags(List<String> newTags) {
     updateCardDetails(
       cardDetails.copyWith(
-        minionTags: newTags
+        familliarTags: newTags
       )
     );
 
@@ -136,6 +140,17 @@ class CardModel extends ChangeNotifier{
 
   set updateCardElementPosition(Map<CardElementPositionType, ElementPosition> newElementPosition) {
     cardElementPosition = newElementPosition;
+    notifyListeners();
+  }
+
+  set updateDescriptionExpandedMode(bool newState){
+    isDescriptionExpanded = newState;
+    notifyListeners();
+  }
+
+  set updateKeyWordDescription(Map<String,String> newKeyWordDescription){
+    
+    keyWordDescriptions = newKeyWordDescription;
     notifyListeners();
   }
 

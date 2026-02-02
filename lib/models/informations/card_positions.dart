@@ -1,4 +1,3 @@
-// 使用相对坐标系统 (0.0 - 1.0)
 import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
@@ -42,25 +41,33 @@ class ElementPosition extends Equatable {
 }
 
 
+/// 它会决定Stack的排列顺序 因为是以 .values 的形式顺序导出的
 class ElementPositionConfigs { 
 	static const Map<CardElementPositionType, ElementLayoutPosition> layouts = {
-    // 卡牌名称：左上角 (50, 80)，大小 400x60
+    
     CardElementPositionType.name: ElementLayoutPosition(
-      x: 55,
+      x: 50,
       y: 68,
-      width: 380,
+      width: 400,
       height: 55,
     ),
     
-    // 卡牌图片：左上角 (50, 150)，大小 400x300
+    
     CardElementPositionType.image: ElementLayoutPosition(
       x: 78,
       y: 118,
       width: 345,
       height: 450,
     ),
+
+    CardElementPositionType.maskLayer: ElementLayoutPosition(
+      x: 60,
+      y: 350,
+      width: 380,
+      height: 220,
+    ),
     
-    // 费用数字：左上角 (20, 20)，大小 50x50
+    
     CardElementPositionType.cost: ElementLayoutPosition(
       x: 46,
       y: 43,
@@ -68,7 +75,7 @@ class ElementPositionConfigs {
       height: 50,
     ),
     
-    // 攻击力：左下角 (50, 620)，大小 60x60
+    
     CardElementPositionType.attack: ElementLayoutPosition(
       x: 62,
       y: 582,
@@ -76,7 +83,7 @@ class ElementPositionConfigs {
       height: 60,
     ),
     
-    // 生命值：右下角 (390, 620)，大小 60x60
+   
     CardElementPositionType.health: ElementLayoutPosition(
       x: 379,
       y: 589,
@@ -84,31 +91,25 @@ class ElementPositionConfigs {
       height: 55,
     ),
 
-	// 类型标签：左上角 (50, 460)，大小 300x40
-
-
-	// 生命值：右下角 (390, 620)，大小 60x60
     CardElementPositionType.description: ElementLayoutPosition(
-      x: 100,
+      x: 78,
       y: 407,
-      width: 300,
-      height: 160,
+      width: 345,
+      height: 162,
     ),
 
-	// 类型标签：左上角 (50, 460)，大小 300x40
     CardElementPositionType.typeTag: ElementLayoutPosition(
-      x: 185,
-      y: 600,
-      width: 120,
-      height: 55,
+      x: 160,
+      y: 580,
+      width: 180,
+      height: 70,
     ),
-
 	
     CardElementPositionType.gem: ElementLayoutPosition(
-      x: 402,
-      y: 57,
-      width: 46,
-      height: 46,
+      x: 400.5,
+      y: 56.5,
+      width: 48,
+      height: 48,
     ),
 
 	CardElementPositionType.seasonRequirement: ElementLayoutPosition(
@@ -121,8 +122,6 @@ class ElementPositionConfigs {
     
   };
   
-  // 获取某个元素的设计稿配置
-  static ElementLayoutPosition? getLayout(CardElementPositionType type) {
-    return layouts[type];
-  }
+  static ElementLayoutPosition? getLayout(CardElementPositionType type) => layouts[type];
+
 }

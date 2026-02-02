@@ -81,7 +81,7 @@ class _TranslationsOutputPanelZhCn implements TranslationsOutputPanelEn {
 	// Translations
 	@override String get name => '图片导出';
 	@override String get outputTips => '创作后点击左下角以开始导出流程';
-	@override String get imageSize => '图片尺寸';
+	@override String get recommendImageScale => '推荐图片比例';
 	@override String get customSize => '自定义';
 	@override String get width => '宽';
 	@override String get height => '高';
@@ -152,12 +152,13 @@ class _TranslationsCardPropPanelCardDetailZhCn implements TranslationsCardPropPa
 	// Translations
 	@override String get name => '卡牌详细设置';
 	@override late final _TranslationsCardPropPanelCardDetailCardTypeZhCn cardType = _TranslationsCardPropPanelCardDetailCardTypeZhCn._(_root);
-	@override String get minionTagSetting => '使魔Tag设置';
-	@override String get newMinionTag => '新建';
-	@override String get minionTagPlaceHolder => '点击对应标签以删除';
+	@override String get familliarTagSetting => '使魔Tag设置';
+	@override String get newFamilliarTag => '新建';
+	@override String get familliarTagPlaceHolder => '点击对应标签以删除';
 	@override String get cardDescription => '卡牌效果描述';
 	@override String get cardDescriptionPlaceHolder => '输入卡牌描述,使用{文字}描述特殊行动';
 	@override String get cardKeyWordSetting => '卡牌关键字设置';
+	@override late final _TranslationsCardPropPanelCardDetailKeyWordDescriptionZhCn keyWordDescription = _TranslationsCardPropPanelCardDetailKeyWordDescriptionZhCn._(_root);
 }
 
 // Path: cardPropPanel.elementPositions
@@ -196,9 +197,22 @@ class _TranslationsCardPropPanelCardDetailCardTypeZhCn implements TranslationsCa
 
 	// Translations
 	@override String get name => '卡牌类型';
-	@override String get minion => '使魔';
+	@override String get familliar => '使魔';
 	@override String get spellcard => '符卡';
+	@override String get player => '自机';
 	@override String get construction => '建筑物';
+}
+
+// Path: cardPropPanel.cardDetail.keyWordDescription
+class _TranslationsCardPropPanelCardDetailKeyWordDescriptionZhCn implements TranslationsCardPropPanelCardDetailKeyWordDescriptionEn {
+	_TranslationsCardPropPanelCardDetailKeyWordDescriptionZhCn._(this._root);
+
+	final TranslationsZhCn _root; // ignore: unused_field
+
+	// Translations
+	@override String get name => '关键字描述';
+	@override String get displayKeyWordDescription => '显示额外的关键字面板';
+	@override String get placeHolder => '编辑对应的关键字描述以显示面板';
 }
 
 // Path: cardPropPanel.elementPositions.cardElementPositionType
@@ -210,6 +224,7 @@ class _TranslationsCardPropPanelElementPositionsCardElementPositionTypeZhCn impl
 	// Translations
 	@override String get name => '名称';
 	@override String get image => '卡面';
+	@override String get maskLayer => '遮罩层';
 	@override String get cost => '灵力花费';
 	@override String get gem => '稀有度';
 	@override String get seasonRequirement => '季语需求';
@@ -250,21 +265,26 @@ extension on TranslationsZhCn {
 			'cardPropPanel.seasonElementSelect.seasonElementRequirement' => '季语需求',
 			'cardPropPanel.cardDetail.name' => '卡牌详细设置',
 			'cardPropPanel.cardDetail.cardType.name' => '卡牌类型',
-			'cardPropPanel.cardDetail.cardType.minion' => '使魔',
+			'cardPropPanel.cardDetail.cardType.familliar' => '使魔',
 			'cardPropPanel.cardDetail.cardType.spellcard' => '符卡',
+			'cardPropPanel.cardDetail.cardType.player' => '自机',
 			'cardPropPanel.cardDetail.cardType.construction' => '建筑物',
-			'cardPropPanel.cardDetail.minionTagSetting' => '使魔Tag设置',
-			'cardPropPanel.cardDetail.newMinionTag' => '新建',
-			'cardPropPanel.cardDetail.minionTagPlaceHolder' => '点击对应标签以删除',
+			'cardPropPanel.cardDetail.familliarTagSetting' => '使魔Tag设置',
+			'cardPropPanel.cardDetail.newFamilliarTag' => '新建',
+			'cardPropPanel.cardDetail.familliarTagPlaceHolder' => '点击对应标签以删除',
 			'cardPropPanel.cardDetail.cardDescription' => '卡牌效果描述',
 			'cardPropPanel.cardDetail.cardDescriptionPlaceHolder' => '输入卡牌描述,使用{文字}描述特殊行动',
 			'cardPropPanel.cardDetail.cardKeyWordSetting' => '卡牌关键字设置',
+			'cardPropPanel.cardDetail.keyWordDescription.name' => '关键字描述',
+			'cardPropPanel.cardDetail.keyWordDescription.displayKeyWordDescription' => '显示额外的关键字面板',
+			'cardPropPanel.cardDetail.keyWordDescription.placeHolder' => '编辑对应的关键字描述以显示面板',
 			'cardPropPanel.elementPositions.name' => '元素方位',
 			'cardPropPanel.elementPositions.displayReferenceLine' => '显示参考线',
 			'cardPropPanel.elementPositions.elementToggle' => '调整元素',
 			'cardPropPanel.elementPositions.resetCurrentElement' => '重置当前元素调整',
 			'cardPropPanel.elementPositions.cardElementPositionType.name' => '名称',
 			'cardPropPanel.elementPositions.cardElementPositionType.image' => '卡面',
+			'cardPropPanel.elementPositions.cardElementPositionType.maskLayer' => '遮罩层',
 			'cardPropPanel.elementPositions.cardElementPositionType.cost' => '灵力花费',
 			'cardPropPanel.elementPositions.cardElementPositionType.gem' => '稀有度',
 			'cardPropPanel.elementPositions.cardElementPositionType.seasonRequirement' => '季语需求',
@@ -274,7 +294,7 @@ extension on TranslationsZhCn {
 			'cardPropPanel.elementPositions.cardElementPositionType.description' => '卡牌描述',
 			'outputPanel.name' => '图片导出',
 			'outputPanel.outputTips' => '创作后点击左下角以开始导出流程',
-			'outputPanel.imageSize' => '图片尺寸',
+			'outputPanel.recommendImageScale' => '推荐图片比例',
 			'outputPanel.customSize' => '自定义',
 			'outputPanel.width' => '宽',
 			'outputPanel.height' => '高',

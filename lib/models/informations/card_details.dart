@@ -7,15 +7,16 @@ class CardDetails{
     this.imageUrl,
     this.seasonTypeSet = const {},
     this.isMixed = false,
-    this.cardType = CardType.minion,
+    this.cardType = CardType.familliar,
     this.cost = 0,
     this.seasonRequirement = const [0,0,0,0,0],
     this.cardRarity = CardRarity.normal,
-    this.minionTags = const [],
+    this.familliarTags = const [],
     this.description,
+	
     this.attack,
-    this.health
-
+    this.health,
+	
   });
 
   //基础信息
@@ -25,7 +26,7 @@ class CardDetails{
   //涉及卡面背景 & 种类
   Set<SeasonType> seasonTypeSet = {};
   bool isMixed = false;
-  CardType cardType = CardType.minion;
+  CardType cardType = CardType.familliar;
 
   //费用与类别
   int? cost = 0;
@@ -33,8 +34,10 @@ class CardDetails{
   CardRarity cardRarity = CardRarity.normal;
 
 
-  List<String> minionTags = [];
+  List<String> familliarTags = [];
+
   String? description;
+  
 
   int? attack = 0;
   int? health = 0;
@@ -48,7 +51,7 @@ class CardDetails{
     int? cost,
     List<int>? seasonRequirement,
     CardRarity? cardRarity,
-    List<String>? minionTags,
+    List<String>? familliarTags,
     String? description,
     int? attack,
     int? health,
@@ -56,14 +59,14 @@ class CardDetails{
   }){
     return CardDetails(
       name: name ?? this.name,
-      imageUrl: imageUrl,
+      imageUrl: (imageUrl?.isEmpty == true ? null : imageUrl ?? this.imageUrl),
       seasonTypeSet: seasonTypeSet ?? this.seasonTypeSet,
       isMixed: isMixed ?? this.isMixed,
       cardType: cardType ?? this.cardType,
       cost: cost ?? this.cost,
       seasonRequirement: seasonRequirement ?? this.seasonRequirement,
       cardRarity: cardRarity ?? this.cardRarity,
-      minionTags: minionTags ?? this.minionTags,
+      familliarTags: familliarTags ?? this.familliarTags,
       description: description ?? this.description,
       attack: attack ?? this.attack,
       health: health ?? this.health
