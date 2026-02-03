@@ -90,6 +90,7 @@ class _MinionTagTypePanelState extends State<MinionTagTypePanel> {
             }
           ),
 
+
           SizedBox(
             height: 40,
             child: TextBox(

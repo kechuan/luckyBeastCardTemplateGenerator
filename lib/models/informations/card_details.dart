@@ -43,7 +43,7 @@ class CardDetails{
   int? health = 0;
 
   CardDetails copyWith({
-    String? title,
+    String? name,
     String? imageUrl,
     Set<SeasonType>? seasonTypeSet,
     bool? isMixed,
@@ -55,7 +55,7 @@ class CardDetails{
     String? description,
     int? attack,
     int? health,
-    String? name
+    
   }){
     return CardDetails(
       name: name ?? this.name,

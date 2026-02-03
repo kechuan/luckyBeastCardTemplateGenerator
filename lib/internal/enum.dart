@@ -45,7 +45,11 @@ enum CardType{
 
   const CardType();
 
-  bool isChess() => this == CardType.familliar || this == CardType.player;
+  bool isChess() => 
+    this == CardType.familliar ||
+    this == CardType.player ||
+    this == CardType.construction
+  ;
 
   String get text => t['cardPropPanel.cardDetail.cardType.$name'] ?? "";
 

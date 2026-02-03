@@ -18,13 +18,13 @@ String convertCardTypeImageUrl({
   String cardTypeSuffix = "";
 
   switch (cardType) {
-    case CardType.familliar || CardType.player:{
+    case CardType.familliar || CardType.player || CardType.construction:{
       targetResourcePath = APPRepository.officalMinionTemplate;
       cardTypeSuffix = CardType.familliar.name;
 
     }
 
-    case CardType.spellcard || CardType.construction:{
+    case CardType.spellcard:{
       targetResourcePath = APPRepository.officalSpellTemplate;
       cardTypeSuffix = CardType.spellcard.name;
     }

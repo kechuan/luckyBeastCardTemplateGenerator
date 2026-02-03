@@ -142,14 +142,6 @@ class _DescriptionKeywordPanelState extends State<DescriptionKeywordPanel> {
 
                   TextBox(
                     controller: keyWordDescriptionController,
-                    //onChanged: (value) {
-
-                    //  final cardModel = context.read<CardModel>();
-
-                    //  cardModel.keyWordDescriptions[keyWordDescriptionNotifier.value!] = value;
-                    //  cardModel.updateKeyWordDescription = cardModel.keyWordDescriptions;
-
-                    //},
                     onChanged: (value) {
 
                       final cardModel = context.read<CardModel>();

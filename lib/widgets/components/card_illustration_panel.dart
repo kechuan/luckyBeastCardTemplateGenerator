@@ -74,11 +74,11 @@ class CardIllustrationPanel extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 color: 
-                                selectedImageUrl == appModel.illustrationPaths.elementAt(index) ? 
-                                  Colors.orange.withValues(alpha: 0.2) : 
+                                  selectedImageUrl == appModel.illustrationPaths.elementAt(index) ? 
+                                  FluentTheme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.2) : 
                                   null
                                 ,
-                              ),
+                              ), 
 
                               child: ListTile(
 
