@@ -63,7 +63,7 @@ String convertElementTypeImageUrl(
 }
 
 String convertCardRarityTypeImageUrl(CardRarity cardRarity)
-=> "${APPRepository.officalRarityTemplate}/${cardRarity.name}.png";
+  => "${APPRepository.officalRarityTemplate}/${cardRarity.name}.png";
 
 String convertDigitNumString(int originalNumber, {int numberBits = 2}) {
 
@@ -135,13 +135,14 @@ Future<String?> saveAsOnWindows(
     String? cardName,
   }
 ) async {
-  
+
   if (bytes == null) return '[Image Convert Error] bytes is null';
 
   final currentTime = DateTime.now();
 
   cardName ??= 
-  'output_${convertDigitNumString(currentTime.month)}-${convertDigitNumString(currentTime.day)}_${convertDigitNumString(currentTime.hour)}.${convertDigitNumString(currentTime.minute)}';
+    'output_${convertDigitNumString(currentTime.month)}-${convertDigitNumString(currentTime.day)}_${convertDigitNumString(currentTime.hour)}.${convertDigitNumString(currentTime.minute)}';
+
   try{
     final imageFile = File('$outputDirectory${Platform.pathSeparator}$cardName.png');
     await imageFile.writeAsBytes(bytes, flush: true);

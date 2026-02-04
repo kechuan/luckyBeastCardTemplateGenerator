@@ -15,6 +15,7 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ColoredBox(
       color: FluentTheme.of(context).scaffoldBackgroundColor,
       child: Row(

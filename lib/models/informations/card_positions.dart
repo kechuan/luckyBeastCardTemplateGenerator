@@ -106,6 +106,7 @@ class ElementPositionConfigs {
     ),
 	
     CardElementPositionType.gem: ElementLayoutPosition(
+      //export refernce Value:x: 402.3,
       x: 400.5,
       y: 56.5,
       width: 48,

@@ -9,10 +9,10 @@ import 'package:lucky_beast_card_template_generator/internal/convert.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
+import 'package:lucky_beast_card_template_generator/widgets/components/card_content.dart';
 import 'package:lucky_beast_card_template_generator/widgets/fragments/fluent_export_card_picture_dialog.dart';
 import 'package:lucky_beast_card_template_generator/widgets/fragments/keyword_description.dart';
 import 'package:lucky_beast_card_template_generator/widgets/views/fluent_main_view.dart';
-import 'package:lucky_beast_card_template_generator/widgets/views/picture_preview_view.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -90,6 +90,7 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                         final customSizeWidth = customSize?.width;
                         final customSizeHeight = customSize?.height;
 
+                       
                         return captureInvisibleWidget(
                           widget: MultiProvider(
                             providers: [
@@ -105,11 +106,14 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                                   SizedBox(
                                     width: customSizeWidth ?? kCardDesignSize.width,
                                     height: customSizeHeight ?? kCardDesignSize.height,
-                                    child: CardContent(cardContainerSize: customSize ?? kCardDesignSize)
+                                    child: CardContent(
+                                      cardContainerSize: customSize ?? kCardDesignSize,
+                                      exportMode: true,
+                                    )
                                   ),
 
                                   if(
-                                  expandedSwitch && 
+                                    expandedSwitch && 
                                     keyWordDescriptionsMap.isNotEmpty
                                   )
 
@@ -149,14 +153,14 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                       },
                     )
                   ).then((data) async {
-                        if (data != null) {
-                          saveAsOnWindows(
-                            data.$2,
-                            bytes: await data.$1,
-                            cardName: cardModel.cardDetails.name
-                          );
-                        }
-                      });
+                    if (data != null) {
+                      saveAsOnWindows(
+                        data.$2,
+                        bytes: await data.$1,
+                        cardName: cardModel.cardDetails.name
+                      );
+                    }
+                  });
 
                 },
               ),

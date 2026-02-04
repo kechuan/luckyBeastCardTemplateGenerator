@@ -4,7 +4,7 @@
 			"path": "lib/widgets/views/fluent_navigation_view.dart",
 			"bookmarks": [
 				{
-					"line": 92,
+					"line": 93,
 					"column": 40,
 					"label": "captureInvisibleWidget —— 注入Widget保存"
 				}

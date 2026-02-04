@@ -41,6 +41,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    Colors.orange.dark;
+
     return MultiProvider(
       providers: [
 
@@ -63,9 +65,9 @@ class MyApp extends StatelessWidget {
               theme: FluentThemeData(
                 brightness: Brightness.light,
                 accentColor: AccentColor.swatch(
-                {
-                  'normal': context.watch<AppModel>().themeColorType.color,
-                }
+                  {
+                    'normal': context.watch<AppModel>().themeColorType.color,
+                  }
                 ),
 
                 scaffoldBackgroundColor: context.watch<AppModel>().themeColorType.color.withValues(alpha: 0.3),
@@ -73,6 +75,9 @@ class MyApp extends StatelessWidget {
                 inactiveColor: Colors.grey.withValues(alpha: 0.6),
                 inactiveBackgroundColor: Colors.grey.withValues(alpha: 0.3),
                 visualDensity: VisualDensity.standard,
+                resources: ResourceDictionary.light(
+                  
+                )
 
               ),
               darkTheme: FluentThemeData(

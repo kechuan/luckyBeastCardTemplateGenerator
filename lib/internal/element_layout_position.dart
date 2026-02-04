@@ -35,6 +35,20 @@ class ElementLayoutPosition {
     );
   }
 
+  ElementLayoutPosition copyWith({
+    double? x,
+    double? y,
+    double? width,
+    double? height,
+  }){
+    return ElementLayoutPosition(
+      x: x ?? this.x,
+      y: y ?? this.y,
+      width:width ?? this.width,
+      height:height ?? this.height,
+    );
+  }
+
   @override
   String toString() => 'DesignElementRect(x: $x, y: $y, w: $width, h: $height)';
 
