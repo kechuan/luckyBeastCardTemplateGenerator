@@ -126,7 +126,7 @@ ThemeData(
 
 
 
-而fluent ui 是这么做的
+而 fluent ui 是这么做的
 
 ```dart
 accentColor: AccentColor.swatch(
@@ -140,7 +140,7 @@ accentColor: AccentColor.swatch(
 
 整这么奇葩是因为 对比起 material 是通过 莫奈色调 算出来的颜色
 
-Fluent UI 则是划分为 8种 明亮色调的设置
+Fluent UI 则是划分为 7种 明亮色调的设置
 
 **darkest** —— **normal** —— **lightest**
 
@@ -162,7 +162,11 @@ Fluent UI 则是划分为 8种 明亮色调的设置
 
 fluent ui 的 state 里 **hover**,**Pressed** 实际上都默认指向固定的 `.亮度等级`
 
-你提供了 直接采用 不提供 就以默认的挡位色差来提供颜色(`AccentColor`)
+
+
+你提供了就直接采用 
+
+不提供 就以默认的挡位色差来提供颜色(`AccentColor`)
 
 > 别忘了 默认的 `AccentColor` 无论是material([100]) 还是 fluentUI(.darkest)
 >
@@ -182,71 +186,17 @@ fluent ui 的 state 里 **hover**,**Pressed** 实际上都默认指向固定的 
 
 Fluent ui 在 `FluentTheme.of(context)` 引入了新的属性 **resource** 
 
-
-
 其内部包含了极其多的可调整属性
 
-有多少?
+
+
+在ide里 **320px** height 的 lint  你显示出来的 滑块thumb 只有 **28px** 这么小
 
 
 
-哥们 在ide里 **320px** height 的 lint  你显示出来的 滑块thumb 只有 **28px** 这么小
+可单独配置的地方多的令人微距
 
-
-
-如果前面还只能说是 初显端倪 那到这里真的是不演了
-
-
-
-里面包含了类似 前端 div class 般里的一大堆排列组合
-
-- control
-- stroke
-- soild
-- alt
-- filledColor
-- onImage
-- ...
-
-
-
-你看着乱 但实际上人家还真有排列
-
-
-
-它们被分为 [subject]-[material]-[state] 的形式
-
-
-
-`subject` 指代作用主体 也就是像这些
-
-- control(可被交互的 (为什么不能写成interact...))
-- card
-- Layer(这里是背景层 (为什么不能写成Scaffold?))
-- Text
-
-
-
-`Type` 指代修饰位置
-
-- `Fill`: 填充色（背景）。
-
-- `Stroke`: 描边色（边框）。
-
-- `Solid` : 纯色（不带透明度的）。
-
-- `Alt`: “Alternative”的缩写。通常指**反差色**或**第二种方案**。
-
-- `OnImage`: 用于文字或图标**叠在图片上**时的颜色
-
-
-
-`state` 可惜它的列表不是你熟悉的 `widgetState` 而是它划定的更通用抽象的 `state`
-
-- `Default`: 默认静止状态。
-- `Secondary / Tertiary`: 次级/三级状态（通常用于 Hover 或 Press 的细微颜色变化）。
-- `Disabled`: 禁用状态。
-- `InputActive`: 正在输入时的状态（如 TextBox 获取焦点）。
+如果前面还只能说是 初显端倪 那到这里真的是不演了。。
 
 
 
