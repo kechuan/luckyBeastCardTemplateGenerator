@@ -6,7 +6,6 @@ import 'package:lucky_beast_card_template_generator/models/providers/card_model.
 import 'package:lucky_beast_card_template_generator/widgets/fragments/card_render_element.dart';
 import 'package:provider/provider.dart';
 
-
 class CardContent extends StatelessWidget {
   const CardContent({
     super.key,
@@ -30,8 +29,8 @@ class CardContent extends StatelessWidget {
             // 背景层
             Selector<CardModel,  (Set<SeasonType>, CardType)>(
               selector: (_, model) => (
-              model.cardDetails.seasonTypeSet, 
-              model.cardDetails.cardType
+                model.cardDetails.seasonTypeSet, 
+                model.cardDetails.cardType
               ),
               builder: (_, data, _) {
 
@@ -49,10 +48,7 @@ class CardContent extends StatelessWidget {
                 //一切元素的基准定位
                 return Positioned.fill(
                   child: Image.asset(
-                    convertCardTypeImageUrl(
-                      seasonTypeSet: data.$1, 
-                      cardType: data.$2
-                    ),
+                    cardBackgroundPath,
                     fit: BoxFit.fill,
                   ),
                 );
@@ -74,7 +70,7 @@ class CardContent extends StatelessWidget {
                 return CardRenderElement(
                   cardContainerSize: cardContainerSize,
                   elementPositionType: elementType,
-                  exportMode : exportMode
+                  exportMode: exportMode
                 );
 
               }),
@@ -113,6 +109,8 @@ class CardContent extends StatelessWidget {
 
           ],
         );
+
+
       }
     );
   }

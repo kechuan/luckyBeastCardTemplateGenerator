@@ -49,7 +49,7 @@ class CardDetailsPanel extends StatelessWidget {
                 ],
               ),
 
-              if(cardType == CardType.familliar) const FluentCardMinionTypeProp(),
+              if(cardType.isChess()) const FluentCardMinionTypeProp(),
 
               Divider(),
 

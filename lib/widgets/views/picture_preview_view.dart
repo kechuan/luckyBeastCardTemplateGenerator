@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucky_beast_card_template_generator/internal/const.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_content.dart';
-import 'package:lucky_beast_card_template_generator/widgets/fragments/keyword_description.dart';
+import 'package:lucky_beast_card_template_generator/widgets/fragments/keyword_description_overlay.dart';
 import 'package:provider/provider.dart';
 
 class PicturePreviewView extends StatelessWidget {
@@ -12,16 +12,19 @@ class PicturePreviewView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        // 计算合适的显示尺寸 (保持宽高比)
+        // w500,h700
         final aspectRatio = kCardDesignSize.width / kCardDesignSize.height;
 
+        //先宽度调整——0.8x 降低"屏占比"
         double displayWidth = constraints.maxWidth * 0.8;
         double displayHeight = displayWidth / aspectRatio;
 
+        //二级后备 再从高度调整 0.9
         if (displayHeight > constraints.maxHeight * 0.9) {
           displayHeight = constraints.maxHeight * 0.9;
           displayWidth = displayHeight * aspectRatio;
         }
+
 
         final displaySize = Size(displayWidth, displayHeight);
 

@@ -9,7 +9,7 @@ class AppModel extends ChangeNotifier {
 
   AppModel();
 
-  //AppLocale appLocale;
+  AppLocale appLocale = AppLocale.zhCn;
   int currentItemIndex = 0;
 
   SeasonType themeColorType = SeasonType.winter;
@@ -27,6 +27,7 @@ class AppModel extends ChangeNotifier {
 
   void updateAppLocale(AppLocale newAppLocale) {
     LocaleSettings.setLocale(newAppLocale);
+    appLocale = newAppLocale;
     notifyListeners();
   }
 

@@ -112,8 +112,18 @@ class _CardOverlayPositionsPanelState extends State<CardOverlayPositionsPanel> {
                               ),
                               Flexible(
                                 child: Slider(
-                                  min: index == 2 ? -1 : -100,
-                                  max: index == 2 ? 1 : 100,
+                                  min: switch(index){
+                                    0 => -100,
+                                    1 => -150,
+                                    2 => -1,
+                                    _ => 0
+                                  },
+                                  max: switch(index){
+                                    0 => 100,
+                                    1 => 150,
+                                    2 => 1,
+                                    _ => 0
+                                  },
                                   value: switch (index){
                                     0 => cardElementPosition.relativePosition.dx,
                                     1 => cardElementPosition.relativePosition.dy,

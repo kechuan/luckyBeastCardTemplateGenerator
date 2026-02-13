@@ -101,6 +101,7 @@ Future<Uint8List> captureInvisibleWidget({
 
   // 3. 初始化流水线
   final pipelineOwner = PipelineOwner();
+  //尽管传参里 focusManager 是可选 但没有它会触发 'ServicesBinding.instance.keyEventManager.keyMessageHandler == null' 的问题
   final buildOwner = BuildOwner(focusManager: FocusManager());
   pipelineOwner.rootNode = renderView;
   renderView.prepareInitialFrame();
@@ -114,9 +115,11 @@ Future<Uint8List> captureInvisibleWidget({
     ),
   ).attachToRenderTree(buildOwner);
 
-  // 5. 强制触发构建、布局和绘制
+  // 5.1 透过 根Element 开始递归构造 elementTree 与 renderObject Tree
   buildOwner.buildScope(rootElement);
   buildOwner.finalizeTree();
+
+  // 5.2 开始给 renderObjectTree 进行常规 layout-CompositingBits-paint(layerTree) 过程
   pipelineOwner.flushLayout();
   pipelineOwner.flushCompositingBits();
   pipelineOwner.flushPaint();

@@ -9,7 +9,7 @@ import 'package:lucky_beast_card_template_generator/widgets/components/card_basi
 import 'package:lucky_beast_card_template_generator/widgets/components/card_details_panel.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_illustration_panel.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_overlay_positions_panel.dart';
-import 'package:lucky_beast_card_template_generator/widgets/components/season_requirement_panel.dart';
+import 'package:lucky_beast_card_template_generator/widgets/components/season_element_requirement_panel.dart';
 import 'package:provider/provider.dart';
 
 class FluentCardPropView extends StatefulWidget {

@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
+import 'package:lucky_beast_card_template_generator/internal/enum.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/views/fluent_navigation_view.dart';
@@ -41,8 +42,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Colors.orange.dark;
-
     return MultiProvider(
       providers: [
 
@@ -52,11 +51,14 @@ class MyApp extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
+
+          final themeColorType = context.select<AppModel,SeasonType>((appModel) => appModel.themeColorType);
+
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: FluentApp(
-              themeMode: context.watch<AppModel>().themeMode,
-              locale: LocaleSettings.currentLocale.flutterLocale,
+              themeMode: context.select<AppModel,ThemeMode>((appModel)=> appModel.themeMode),
+              locale: context.select<AppModel,AppLocale>((appModel)=> appModel.appLocale).flutterLocale,
               localizationsDelegates: [
                 FluentLocalizations.delegate,
 
@@ -66,12 +68,12 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.light,
                 accentColor: AccentColor.swatch(
                   {
-                    'normal': context.watch<AppModel>().themeColorType.color,
+                    'normal': themeColorType.color,
+                    
                   }
                 ),
 
-                scaffoldBackgroundColor: context.watch<AppModel>().themeColorType.color.withValues(alpha: 0.3),
-
+                scaffoldBackgroundColor: themeColorType.color.withValues(alpha: 0.3),
                 inactiveColor: Colors.grey.withValues(alpha: 0.6),
                 inactiveBackgroundColor: Colors.grey.withValues(alpha: 0.3),
                 visualDensity: VisualDensity.standard,
@@ -85,10 +87,10 @@ class MyApp extends StatelessWidget {
 
                 accentColor: AccentColor.swatch(
                 {
-                  'normal': context.watch<AppModel>().themeColorType.color.withValues(alpha: 0.8),
+                  'normal': themeColorType.color.withValues(alpha: 0.8),
                 }
                 ),
-                scaffoldBackgroundColor: context.watch<AppModel>().themeColorType.color.withValues(alpha: 0.2),
+                scaffoldBackgroundColor: themeColorType.color.withValues(alpha: 0.2),
                 inactiveColor: Colors.white.withValues(alpha: 0.6),
                 inactiveBackgroundColor: Colors.white.withValues(alpha: 0.3),
                 visualDensity: VisualDensity.standard,

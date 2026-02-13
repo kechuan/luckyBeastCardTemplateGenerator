@@ -11,7 +11,7 @@ import 'package:lucky_beast_card_template_generator/models/providers/app_model.d
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_content.dart';
 import 'package:lucky_beast_card_template_generator/widgets/fragments/fluent_export_card_picture_dialog.dart';
-import 'package:lucky_beast_card_template_generator/widgets/fragments/keyword_description.dart';
+import 'package:lucky_beast_card_template_generator/widgets/fragments/keyword_description_overlay.dart';
 import 'package:lucky_beast_card_template_generator/widgets/views/fluent_main_view.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
@@ -78,7 +78,7 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                   final appModel = context.read<AppModel>();
                   final cardModel = context.read<CardModel>();
 
-                  await showDialog< (Future<Uint8List>?, String)>(
+                  await showDialog<(Future<Uint8List>?, String)>(
                     context: context,
                     barrierDismissible: true,
                     builder: (_) => FluentExportCardPictureDialog(
@@ -89,7 +89,6 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
 
                         final customSizeWidth = customSize?.width;
                         final customSizeHeight = customSize?.height;
-
                        
                         return captureInvisibleWidget(
                           widget: MultiProvider(
@@ -97,51 +96,48 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                               ChangeNotifierProvider.value(value: appModel),
                               ChangeNotifierProvider.value(value: cardModel),
                             ],
-                            child: SizedBox(
-
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-
-                                  SizedBox(
-                                    width: customSizeWidth ?? kCardDesignSize.width,
-                                    height: customSizeHeight ?? kCardDesignSize.height,
-                                    child: CardContent(
-                                      cardContainerSize: customSize ?? kCardDesignSize,
-                                      exportMode: true,
-                                    )
-                                  ),
-
-                                  if(
-                                    expandedSwitch && 
-                                    keyWordDescriptionsMap.isNotEmpty
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                            
+                                SizedBox(
+                                  width: customSizeWidth ?? kCardDesignSize.width,
+                                  height: customSizeHeight ?? kCardDesignSize.height,
+                                  child: CardContent(
+                                    cardContainerSize: customSize ?? kCardDesignSize,
+                                    exportMode: true,
                                   )
-
-                                  Transform.scale(
-                                    // 500/700 => 1.2
-                                    scale: 1.2 + ((customSizeWidth ?? kCardDesignSize.width) / (kCardDesignSize.width) - 1),
-
-                                    child: Column(
-                                      spacing: 6,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: List.generate(
-                                        keyWordDescriptionsMap.length,
-                                        (index) {
-
-                                          if (keyWordDescriptionsMap.values.elementAtOrNull(index)?.isEmpty == true) {
-                                            return const SizedBox.shrink();
-                                          }
-
-                                          return KeyWordDescription(
-                                            keyWord: '${keyWordDescriptionsMap.keys.elementAtOrNull(index)}',
-                                            descrpition: "${keyWordDescriptionsMap.values.elementAtOrNull(index)}",
-                                          );
+                                ),
+                            
+                                if(
+                                  expandedSwitch && 
+                                  keyWordDescriptionsMap.isNotEmpty
+                                )
+                            
+                                Transform.scale(
+                                  scale: 1.2 + ((customSizeWidth ?? kCardDesignSize.width) / (kCardDesignSize.width) - 1),
+                            
+                                  child: Column(
+                                    spacing: 6,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: List.generate(
+                                      keyWordDescriptionsMap.length,
+                                      (index) {
+                            
+                                        if (keyWordDescriptionsMap.values.elementAtOrNull(index)?.isEmpty == true) {
+                                          return const SizedBox.shrink();
                                         }
-                                      ),
+                            
+                                        return KeyWordDescription(
+                                          keyWord: '${keyWordDescriptionsMap.keys.elementAtOrNull(index)}',
+                                          descrpition: "${keyWordDescriptionsMap.values.elementAtOrNull(index)}",
+                                        );
+                                      }
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                )
+                                
+                              ],
                             ),
                           ),
                           size: Size(

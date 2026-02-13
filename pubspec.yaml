@@ -1,7 +1,7 @@
 name: lucky_beast_card_template_generator
 description: "A Project for creating DIY Lucky Beast cards"
 publish_to: 'none'
-version: 0.3.0
+version: 0.3.1
 
 environment:
   sdk: ^3.10.3

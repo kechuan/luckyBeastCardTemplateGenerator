@@ -77,7 +77,7 @@ class ElementPositionConfigs {
     
     
     CardElementPositionType.attack: ElementLayoutPosition(
-      x: 62,
+      x: 62.5,
       y: 582,
       width: 60,
       height: 60,
@@ -85,7 +85,7 @@ class ElementPositionConfigs {
     
    
     CardElementPositionType.health: ElementLayoutPosition(
-      x: 379,
+      x: 379.2,
       y: 589,
       width: 55,
       height: 55,

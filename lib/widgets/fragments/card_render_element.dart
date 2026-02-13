@@ -8,7 +8,7 @@ import 'package:lucky_beast_card_template_generator/models/informations/card_pos
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/fragments/scalable_element.dart';
-import 'package:lucky_beast_card_template_generator/widgets/fragments/season_element.dart';
+import 'package:lucky_beast_card_template_generator/widgets/fragments/season_element_requirement_bar.dart';
 import 'package:provider/provider.dart';
 
 class CardRenderElement extends StatelessWidget {
@@ -29,9 +29,10 @@ class CardRenderElement extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // 从配置中获取设计稿定义
+    //不知道是什么配置受影响 导致的元素错位。。
     final designRect = 
-      exportMode && elementPositionType == CardElementPositionType.gem ?
-      ElementPositionConfigs.getLayout(elementPositionType)!.copyWith(x: 402.3) :
+      exportMode ?
+      ElementPositionConfigs.getLayout(elementPositionType)!.copyWith(x: ElementPositionConfigs.getLayout(elementPositionType)!.x + 1.5) :
       ElementPositionConfigs.getLayout(elementPositionType)
     ;
 
@@ -58,16 +59,14 @@ class CardRenderElement extends StatelessWidget {
         // 应用微调偏移
         final finalPosition = scaledPosition + (
           readjustElementPosition?.relativePosition ?? Offset.zero
-          );
+        );
 
         debugPrint(
           '[${elementPositionType.name}] '
           'x:${designRect.x} => ${finalPosition.dx.toStringAsFixed(1)},'
           'y:${designRect.y} => ${finalPosition.dy.toStringAsFixed(1)},'
-          'width:${designRect.width} => ${scaledSize.width.toStringAsFixed(1)},'
-          'height:${designRect.height} => ${scaledSize.height.toStringAsFixed(1)},'
-          'size Ratio.w:${(scaledSize.width / designRect.width).toStringAsFixed(2)},'
-          'size Ratio.h:${(scaledSize.height / designRect.height).toStringAsFixed(2)}'
+          'width:${designRect.width} => ${scaledSize.width.toStringAsFixed(1)}, ratio:${(scaledSize.width / designRect.width).toStringAsFixed(2)}'
+          'height:${designRect.height} => ${scaledSize.height.toStringAsFixed(1)}, ratio:${(scaledSize.height / designRect.height).toStringAsFixed(2)}'
         );
 
         return Positioned(
@@ -98,7 +97,7 @@ Widget renderElement(
   Size cardContainerSize,
   Size elementLayoutSize,
   double scaleRatio,
-  double readjustScale, 
+  double readjustScaleRatio, 
 ) {
 
   //整个Model 就 Map 与 CardDetails 不值得再去拆分。。。
@@ -192,7 +191,7 @@ Widget renderElement(
           Center(
             child: ScalableFontSizeText(
               scaleRatio: scaleRatio,
-              toggleScaleRatio: readjustScale,
+              toggleScaleRatio: readjustScaleRatio,
               fontWeight: fontWeight,
               text: renderResource, 
               designFontSize: designFontSize,
@@ -206,7 +205,7 @@ Widget renderElement(
           CardElementPositionType.name => 
           ScalableFontSizeText(
             scaleRatio: scaleRatio,
-            toggleScaleRatio: readjustScale,
+            toggleScaleRatio: readjustScaleRatio,
             text: renderResource,
             designFontSize: designFontSize,
             strokeWidth: strokeWidth,
@@ -221,19 +220,19 @@ Widget renderElement(
               text: renderResource,
               designFontSize: designFontSize,
               scaleRatio: scaleRatio,
-              toggleScaleRatio: readjustScale,
+              toggleScaleRatio: readjustScaleRatio,
               textFontFamily: textFontFamily,
               
             ),
           ),
 
           CardElementPositionType.seasonRequirement => Transform.scale(
-            scale: 1 + readjustScale,
+            scale: 1 + readjustScaleRatio,
             child: const SeasonElement()
           ),
 
           CardElementPositionType.gem => Transform.scale(
-            scale: 1 + readjustScale,
+            scale: 1 + readjustScaleRatio,
             child: Image.asset(
               renderResource,
               fit: BoxFit.cover
@@ -241,7 +240,7 @@ Widget renderElement(
           ),
 
           CardElementPositionType.maskLayer => Transform.scale(
-            scale: 1 + readjustScale,
+            scale: 1 + readjustScaleRatio,
             child: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -250,9 +249,8 @@ Widget renderElement(
                   colors: [
                     Colors.black.withValues(alpha: 0.02),
                     Colors.black.withValues(alpha: 0.3),
-                    Colors.black.withValues(alpha: 0.6),
-                    Colors.black.withValues(alpha: 0.8),
-            
+                    Colors.black.withValues(alpha: 0.5),
+                    Colors.black.withValues(alpha: 0.7),
                   ],
                   stops: [
                     0.2,
@@ -266,7 +264,7 @@ Widget renderElement(
           ),
 
           CardElementPositionType.image => Transform.scale(
-            scale: 1 + readjustScale,
+            scale: 1 + readjustScaleRatio,
             child: Builder(
               builder: (_) {
 

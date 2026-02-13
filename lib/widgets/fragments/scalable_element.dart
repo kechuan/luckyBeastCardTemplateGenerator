@@ -50,7 +50,7 @@ class ScalableFontSizeText extends StatelessWidget {
               height: 1.25,
               foreground: Paint()
                 ..style = PaintingStyle.stroke
-                ..strokeWidth = strokeWidth ?? 4.5
+                ..strokeWidth = (strokeWidth ?? 4.5)*scaleRatio
                 ..strokeCap = StrokeCap.round
                 ..strokeJoin = StrokeJoin.round
                 ..color = Colors.black,
