@@ -1,5 +1,4 @@
 
-import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -131,32 +130,12 @@ Future<Uint8List> captureInvisibleWidget({
   return byteData!.buffer.asUint8List();
 }
 
-Future<String?> saveAsOnWindows(
-  String outputDirectory,
-  {
-    Uint8List? bytes,
-    String? cardName,
-  }
-) async {
-
-  if (bytes == null) return '[Image Convert Error] bytes is null';
-
+String buildOutputImageFileName(String? cardName) {
   final currentTime = DateTime.now();
 
-  cardName ??= 
+  cardName ??=
     'output_${convertDigitNumString(currentTime.month)}-${convertDigitNumString(currentTime.day)}_${convertDigitNumString(currentTime.hour)}.${convertDigitNumString(currentTime.minute)}';
 
-  try{
-    final imageFile = File('$outputDirectory${Platform.pathSeparator}$cardName.png');
-    await imageFile.writeAsBytes(bytes, flush: true);
-  }
-
-  on IOException catch(e){
-    debugPrint("[Image Output Error] $e");
-    return e.toString();
-  }
-
-  return null;
-
+  return '$cardName.png';
 }
 

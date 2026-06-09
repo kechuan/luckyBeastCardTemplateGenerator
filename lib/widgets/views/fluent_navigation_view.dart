@@ -7,6 +7,8 @@ import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/const.dart';
 import 'package:lucky_beast_card_template_generator/internal/convert.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
+import 'package:lucky_beast_card_template_generator/internal/platform/export_file.dart';
+import 'package:lucky_beast_card_template_generator/internal/platform/window_controls.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_content.dart';
@@ -14,7 +16,6 @@ import 'package:lucky_beast_card_template_generator/widgets/fragments/fluent_exp
 import 'package:lucky_beast_card_template_generator/widgets/fragments/keyword_description_overlay.dart';
 import 'package:lucky_beast_card_template_generator/widgets/views/fluent_main_view.dart';
 import 'package:provider/provider.dart';
-import 'package:window_manager/window_manager.dart';
 
 class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
   const FluentLuckyBeastsTemplateNavigationView({super.key});
@@ -138,7 +139,7 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                     )
                   ).then((data) async {
                       if (data != null) {
-                        saveAsOnWindows(
+                        savePngImage(
                           data.$2,
                           bytes: await data.$1,
                           cardName: cardModel.cardDetails.name
@@ -175,22 +176,11 @@ class LegacyNavigationTitleBar extends TitleBar {
       ),
       captionControls: Builder(
         builder: (context) {
-          return WindowCaption(
-            brightness: FluentTheme.of(context).brightness == Brightness.dark
-              ? Brightness.dark
-              : Brightness.light,
-            backgroundColor: Colors.transparent,
-          );
+          return buildPlatformWindowCaption(context);
         },
       ),
-      onDragStarted: windowManager.startDragging,
-      onDoubleTap: () async {
-        if (await windowManager.isMaximized()) {
-          await windowManager.restore();
-        } else {
-          await windowManager.maximize();
-        }
-      },
+      onDragStarted: startPlatformWindowDragging,
+      onDoubleTap: togglePlatformWindowMaximize,
     );
 
   @override

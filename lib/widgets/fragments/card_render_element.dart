@@ -1,9 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:lucky_beast_card_template_generator/internal/const.dart';
 import 'package:lucky_beast_card_template_generator/internal/convert.dart';
+import 'package:lucky_beast_card_template_generator/internal/debug_log.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
+import 'package:lucky_beast_card_template_generator/internal/platform/platform_image.dart';
 import 'package:lucky_beast_card_template_generator/models/informations/card_positions.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
@@ -38,7 +38,7 @@ class CardRenderElement extends StatelessWidget {
 
 
     if (designRect == null) {
-      debugPrint('Warning: No layout defined for $elementPositionType');
+      debugLog('Warning: No layout defined for $elementPositionType');
       return const SizedBox.shrink();
     }
 
@@ -61,7 +61,7 @@ class CardRenderElement extends StatelessWidget {
           readjustElementPosition?.relativePosition ?? Offset.zero
         );
 
-        debugPrint(
+        debugLog(
           '[${elementPositionType.name}] '
           'x:${designRect.x} => ${finalPosition.dx.toStringAsFixed(1)},'
           'y:${designRect.y} => ${finalPosition.dy.toStringAsFixed(1)},'
@@ -113,13 +113,13 @@ Widget renderElement(
         CardElementPositionType.typeTag =>  "${cardDetails.cardType.text}${cardDetails.familliarTags.isNotEmpty ? '\n' : ''}${cardDetails.familliarTags.join('/')}",
         CardElementPositionType.description => cardDetails.description ?? '',
         CardElementPositionType.gem => convertCardRarityTypeImageUrl(cardDetails.cardRarity),
-        CardElementPositionType.image => File(cardDetails.imageUrl ?? '').existsSync() ? cardDetails.imageUrl! : '',
+        CardElementPositionType.image => isUsableImageSource(cardDetails.imageUrl) ? cardDetails.imageUrl! : '',
         _ => ''
       };
     },
     builder: (_, renderResource, _) {
 
-      debugPrint("[$elementPositionType] it rebuild");
+      debugLog("[$elementPositionType] it rebuild");
 
       String? textFontFamily;
       FontWeight? fontWeight;
@@ -270,10 +270,7 @@ Widget renderElement(
 
                 if (renderResource.isEmpty) return const SizedBox.shrink();
 
-                return Image.file(
-                  File(renderResource),
-                  fit: BoxFit.contain,
-                );
+                return buildPlatformImage(renderResource);
 
               }
             ),

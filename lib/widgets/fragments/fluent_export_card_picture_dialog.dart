@@ -1,10 +1,9 @@
-import 'dart:io';
-
-import 'package:filepicker_windows/filepicker_windows.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/const.dart';
+import 'package:lucky_beast_card_template_generator/internal/debug_log.dart';
+import 'package:lucky_beast_card_template_generator/internal/platform/export_file.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/fragments/general_number_input_box.dart';
 import 'package:provider/provider.dart';
@@ -23,13 +22,12 @@ class FluentExportCardPictureDialog extends StatefulWidget {
 
 class _FluentExportCardPictureDialogState extends State<FluentExportCardPictureDialog> {
 
-    
   final outputImageWidthController = TextEditingController(text: kCardDesignSize.width.round().toString());
   final outputImageHeightController = TextEditingController(text: kCardDesignSize.height.round().toString());
 
   @override
   void initState() {
-    outputImageWidthController.addListener((){
+    outputImageWidthController.addListener(() {
       outputImageHeightController.text = ("${(double.tryParse(outputImageWidthController.text) ?? 0) * 1.4}");
     });
     super.initState();
@@ -37,56 +35,54 @@ class _FluentExportCardPictureDialogState extends State<FluentExportCardPictureD
 
   @override
   Widget build(BuildContext context) {
+    final appModel = context.read<AppModel>();
 
     final outputDirectoryEditingController = TextEditingController(
-      text: 
-      context.read<AppModel>().importDirectoryPath ?? (Directory('').absolute.path).toString()
+      text: appModel.importDirectoryPath ?? defaultOutputDirectoryPath
     );
-
-
-
 
     ValueNotifier<bool> customSizeNotifier = ValueNotifier(false);
 
     return ContentDialog(
       title: Text(t.outputPanel.name),
       content: SizedBox(
-        height: 150,
+        height: supportsOutputDirectorySelection ? 150 : 60,
         child: Column(
           spacing: 16,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            //Path
-            Text(t.outputPanel.outputPath, style: TextStyle(color: FluentTheme.of(context).inactiveColor),),
+            if (supportsOutputDirectorySelection) ...[
+              Text(t.outputPanel.outputPath, style: TextStyle(color: FluentTheme.of(context).inactiveColor),),
 
-            Row(
-              spacing: 12,
-              children: [
-                Expanded(
-                  child: TextBox(
-                    controller: outputDirectoryEditingController,
-                    readOnly: true,
+              Row(
+                spacing: 12,
+                children: [
+                  Expanded(
+                    child: TextBox(
+                      controller: outputDirectoryEditingController,
+                      readOnly: true,
 
+                    ),
                   ),
-                ),
 
-                Button(
-                  child: const Text('...'),
-                  onPressed: () async {
+                  Button(
+                    child: const Text('...'),
+                    onPressed: () async {
 
-                    final directoryPicker = DirectoryPicker().getDirectory();
+                      final directoryPath = await pickOutputDirectory();
 
-                    if (directoryPicker != null) {
-                      outputDirectoryEditingController.text = directoryPicker.path;
-                      context.read<AppModel>().importDirectoryPath = directoryPicker.path;
-                      debugPrint(outputDirectoryEditingController.text);
-                    }
+                      if (directoryPath != null) {
+                        outputDirectoryEditingController.text = directoryPath;
+                        appModel.importDirectoryPath = directoryPath;
+                        debugLog(outputDirectoryEditingController.text);
+                      }
 
-                  },
-                )
-              ],
-            ),
+                    },
+                  )
+                ],
+              ),
+            ],
 
             //Size
             Row(
@@ -143,7 +139,7 @@ class _FluentExportCardPictureDialogState extends State<FluentExportCardPictureD
                             width: 60,
                             child: GeneralNumberInputBox(
                               textEditingController: outputImageWidthController,
-                              inputFormatter:[
+                              inputFormatter: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
                               enabled: status,
@@ -156,7 +152,7 @@ class _FluentExportCardPictureDialogState extends State<FluentExportCardPictureD
                             width: 60,
                             child: GeneralNumberInputBox(
                               textEditingController: outputImageHeightController,
-                              inputFormatter:[
+                              inputFormatter: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
                               enabled: status,
@@ -170,10 +166,9 @@ class _FluentExportCardPictureDialogState extends State<FluentExportCardPictureD
 
                 ],
               ),
-              
+
             ),
 
-            
           ],
         ),
       ),
@@ -186,26 +181,31 @@ class _FluentExportCardPictureDialogState extends State<FluentExportCardPictureD
         FilledButton(
           onPressed: () {
 
-            if (outputDirectoryEditingController.text.isEmpty) return;
+            if (
+            supportsOutputDirectorySelection &&
+              outputDirectoryEditingController.text.isEmpty
+            ) {
+              return;
+            }
 
             Navigator.of(context).pop(
               (
-              widget.confirmAction?.call(
-                customSizeNotifier.value ?
+                widget.confirmAction?.call(
+                  customSizeNotifier.value ?
                   Size(
                     double.tryParse(outputImageWidthController.text) ?? 0,
                     double.tryParse(outputImageHeightController.text) ?? 0
                   ) : null
-              ),
-              outputDirectoryEditingController.text
+                ),
+                outputDirectoryEditingController.text
               )
 
             );
 
           },
           child: Text(
-        	    t.outputPanel.ok,
-            	style: TextStyle(color: FluentTheme.of(context).accentColor.basedOnLuminance())
+            t.outputPanel.ok,
+            style: TextStyle(color: FluentTheme.of(context).accentColor.basedOnLuminance())
           ),
         ),
       ],

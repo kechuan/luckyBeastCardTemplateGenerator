@@ -3,7 +3,7 @@ import 'package:desktop_drop/desktop_drop.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/const.dart';
-import 'package:lucky_beast_card_template_generator/internal/extensions.dart';
+import 'package:lucky_beast_card_template_generator/internal/platform/illustration_import.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_basic_information_panel.dart';
 import 'package:lucky_beast_card_template_generator/widgets/components/card_details_panel.dart';
@@ -38,13 +38,9 @@ class _FluentCardPropViewState extends State<FluentCardPropView> {
             },
             onDragDone: (details) {
 
-              for (DropItem currentFileSystemEntity in details.files){
-
-                appModel.updateIllustrationPaths = appModel.illustrationPaths.copyWithAddAll(
-                  appModel.handleImportIllustration(currentFileSystemEntity.path).toList()
-                ).toSet();
-
-              }
+              appModel.addIllustrations(
+                collectIllustrationsFromDroppedItems(details.files),
+              );
 
               //debugPrint("Path: $importPath");
               dragNotifier.value = false;

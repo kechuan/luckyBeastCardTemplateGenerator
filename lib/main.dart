@@ -1,34 +1,19 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
+import 'package:lucky_beast_card_template_generator/internal/platform/window_controls.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/app_model.dart';
 import 'package:lucky_beast_card_template_generator/models/providers/card_model.dart';
 import 'package:lucky_beast_card_template_generator/widgets/views/fluent_navigation_view.dart';
 import 'package:provider/provider.dart';
-import 'package:window_manager/window_manager.dart';
 
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
   //i18n
-  LocaleSettings.useDeviceLocale();
-  //window_manager
-  await windowManager.ensureInitialized();
-
-  WindowOptions windowOptions = const WindowOptions(
-    titleBarStyle: TitleBarStyle.hidden,
-    windowButtonVisibility: false,
-    minimumSize: Size(800, 600),
-    size: Size(1200, 800),
-    backgroundColor: Colors.transparent
-  );
-
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.setAsFrameless(); 
-    await windowManager.show();
-    await windowManager.focus();
-  });
+  await LocaleSettings.useDeviceLocale();
+  await initializePlatformWindow();
 
   runApp(
     TranslationProvider(child: const MyApp())
@@ -95,7 +80,7 @@ class MyApp extends StatelessWidget {
                 inactiveBackgroundColor: Colors.white.withValues(alpha: 0.3),
                 visualDensity: VisualDensity.standard,
               ),
-              home: DragToResizeArea(
+              home: buildPlatformWindowFrame(
                 child: const FluentLuckyBeastsTemplateNavigationView(),
               )
             ),

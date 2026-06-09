@@ -44,6 +44,7 @@ class CardIllustrationPanel extends StatelessWidget {
       content: Selector<AppModel, int>(
         selector: (_, appModel) => appModel.illustrationPaths.length,
         builder: (_, resourceLength, _) {
+          final illustrationSources = appModel.illustrationPaths.toList();
           return Center(
             child: AnimatedSize(
               duration: const Duration(milliseconds: 300),
@@ -65,6 +66,8 @@ class CardIllustrationPanel extends StatelessWidget {
                     itemCount: resourceLength,
                     itemExtent: 60,
                     itemBuilder: (_, index) {
+                      final illustrationSource = illustrationSources[index];
+
                       return Selector<CardModel, String?>(
                         selector: (_, cardModel) => cardModel.cardDetails.imageUrl,
                         builder: (_, selectedImageUrl, _) {
@@ -74,7 +77,7 @@ class CardIllustrationPanel extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 color: 
-                                  selectedImageUrl == appModel.illustrationPaths.elementAt(index) ? 
+                                  selectedImageUrl == illustrationSource ? 
                                   FluentTheme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.2) : 
                                   null
                                 ,
@@ -83,15 +86,15 @@ class CardIllustrationPanel extends StatelessWidget {
                               child: ListTile(
 
                                 onPressed: () {
-                                  context.read<CardModel>().updateCardImageUrl(appModel.illustrationPaths.elementAt(index));
+                                  context.read<CardModel>().updateCardImageUrl(illustrationSource);
                                 },
                                 leading: 
-                                selectedImageUrl == appModel.illustrationPaths.elementAt(index) ? 
+                                selectedImageUrl == illustrationSource ? 
                                   const Icon(FluentIcons.accept) :
                                   null
                                 ,
                                 title: Text(
-                                  appModel.illustrationPaths.elementAt(index).split('\\').last.toLowerCase(),
+                                  appModel.illustrationDisplayName(illustrationSource).toLowerCase(),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),

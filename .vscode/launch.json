@@ -20,6 +20,21 @@
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "release"
+		},
+		{
+			"name": "lucky_beast_card_template_generator (web debug)",
+			"request": "launch",
+			"type": "dart",
+			"deviceId": "chrome",
+			"program": "lib/main.dart"
+		},
+		{
+			"name": "lucky_beast_card_template_generator (web release)",
+			"request": "launch",
+			"type": "dart",
+			"deviceId": "chrome",
+			"program": "lib/main.dart",
+			"flutterMode": "release"
 		}
 	]
 }

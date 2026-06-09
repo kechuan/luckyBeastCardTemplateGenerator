@@ -1,21 +1,20 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:lucky_beast_card_template_generator/i18n/strings.g.dart';
-import 'package:lucky_beast_card_template_generator/internal/const.dart';
 import 'package:lucky_beast_card_template_generator/internal/enum.dart';
+import 'package:lucky_beast_card_template_generator/internal/platform/illustration_import.dart';
 
 class AppModel extends ChangeNotifier {
 
-  AppModel();
+  AppModel() : appLocale = LocaleSettings.currentLocale;
 
-  AppLocale appLocale = AppLocale.zhCn;
+  AppLocale appLocale;
   int currentItemIndex = 0;
 
   SeasonType themeColorType = SeasonType.winter;
   ThemeMode themeMode = ThemeMode.light;
 
   Set<String> illustrationPaths = {};
+  Map<String, String> illustrationNames = {};
   bool displayReferenceLine = false;
 
   String? importDirectoryPath;
@@ -33,7 +32,27 @@ class AppModel extends ChangeNotifier {
 
   set updateIllustrationPaths(Set<String> newillustrationPaths) {
     illustrationPaths = newillustrationPaths;
+    illustrationNames = {
+      for (final entry in illustrationNames.entries)
+        if (newillustrationPaths.contains(entry.key)) entry.key: entry.value,
+    };
     notifyListeners();
+  }
+
+  void addIllustrations(Map<String, String> newIllustrations) {
+    illustrationPaths = {
+      ...illustrationPaths,
+      ...newIllustrations.keys,
+    };
+    illustrationNames = {
+      ...illustrationNames,
+      ...newIllustrations,
+    };
+    notifyListeners();
+  }
+
+  String illustrationDisplayName(String source) {
+    return displayNameForIllustration(source, illustrationNames[source]);
   }
 
   set updateDisplayReferenceLineMode(bool newMode) {
@@ -49,44 +68,6 @@ class AppModel extends ChangeNotifier {
   set updateThemeMode(ThemeMode newThemeMode) {
     themeMode = newThemeMode;
     notifyListeners();
-  }
-
-  Set<String> handleImportIllustration(String path) {
-
-    Set<String> importPath = {};
-
-    FileSystemEntityType fileType = FileSystemEntity.typeSync(path);
-
-    
-
-    if (fileType == FileSystemEntityType.file) {
-      String extension = path.split('.').last.toLowerCase();
-      if (kIllustrationType.contains(extension)) {
-        importPath.add(path);
-      }
-
-    }
-
-    else {
-
-      final List<FileSystemEntity> entities = Directory(path).listSync();
-
-      for (var entity in entities) {
-        if (entity is File) {
-          String extension = entity.path.split('.').last.toLowerCase();
-          if (kIllustrationType.contains(extension)) {
-            importPath.add(entity.path);
-          }
-        }
-
-        else {
-          importPath.addAll(handleImportIllustration(entity.path));
-        }
-      }
-    }
-
-    return importPath;
-
   }
 
 }
