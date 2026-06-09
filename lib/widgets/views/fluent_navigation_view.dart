@@ -29,25 +29,13 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
         return NavigationView(
 
           transitionBuilder: (child, animation) => child,
-          appBar: NavigationAppBar(
-            leading: Image.asset('assets/logo.png', scale: 2.5),
-            title: ColoredBox(
-              color: Colors.transparent,
-              child: Center(
-                child: Text(t.appTitle, style: TextStyle(fontSize: 13))
-              ),
-            ),
-            actions: WindowCaption(
-              brightness: FluentTheme.of(context).brightness == Brightness.dark ? Brightness.dark : Brightness.light,
-              backgroundColor: Colors.transparent,
-              //title: Text("test"),
-            ),
-          ),
+          titleBar: LegacyNavigationTitleBar(),
 
           pane: NavigationPane(
             selected: currentItemIndex,
             onChanged: (index) => context.read<AppModel>().updateCurrentItemIndex = index,
             displayMode: PaneDisplayMode.compact,
+            toggleButtonPosition: PaneToggleButtonPreferredPosition.pane,
             items: [
 
               //类似Divider的玩意
@@ -89,7 +77,7 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
 
                         final customSizeWidth = customSize?.width;
                         final customSizeHeight = customSize?.height;
-                       
+
                         return captureInvisibleWidget(
                           widget: MultiProvider(
                             providers: [
@@ -99,7 +87,7 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                            
+
                                 SizedBox(
                                   width: customSizeWidth ?? kCardDesignSize.width,
                                   height: customSizeHeight ?? kCardDesignSize.height,
@@ -108,26 +96,26 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                                     exportMode: true,
                                   )
                                 ),
-                            
+
                                 if(
-                                  expandedSwitch && 
+                                expandedSwitch && 
                                   keyWordDescriptionsMap.isNotEmpty
                                 )
-                            
+
                                 Transform.scale(
                                   scale: 1.2 + ((customSizeWidth ?? kCardDesignSize.width) / (kCardDesignSize.width) - 1),
-                            
+
                                   child: Column(
                                     spacing: 6,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: List.generate(
                                       keyWordDescriptionsMap.length,
                                       (index) {
-                            
+
                                         if (keyWordDescriptionsMap.values.elementAtOrNull(index)?.isEmpty == true) {
                                           return const SizedBox.shrink();
                                         }
-                            
+
                                         return KeyWordDescription(
                                           keyWord: '${keyWordDescriptionsMap.keys.elementAtOrNull(index)}',
                                           descrpition: "${keyWordDescriptionsMap.values.elementAtOrNull(index)}",
@@ -136,7 +124,7 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                                
+
                               ],
                             ),
                           ),
@@ -149,14 +137,14 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
                       },
                     )
                   ).then((data) async {
-                    if (data != null) {
-                      saveAsOnWindows(
-                        data.$2,
-                        bytes: await data.$1,
-                        cardName: cardModel.cardDetails.name
-                      );
-                    }
-                  });
+                      if (data != null) {
+                        saveAsOnWindows(
+                          data.$2,
+                          bytes: await data.$1,
+                          cardName: cardModel.cardDetails.name
+                        );
+                      }
+                    });
 
                 },
               ),
@@ -169,6 +157,47 @@ class FluentLuckyBeastsTemplateNavigationView extends StatelessWidget {
 
       child: const MainView(),
 
+    );
+  }
+}
+
+class LegacyNavigationTitleBar extends TitleBar {
+  LegacyNavigationTitleBar({super.key})
+  : super(
+      height: 48,
+      isBackButtonVisible: false,
+      icon: Padding(
+        padding: const EdgeInsetsDirectional.only(start: 12),
+        child: Image.asset('assets/logo.png', scale: 2.5),
+      ),
+      content: Center(
+        child: Text(t.appTitle, style: const TextStyle(fontSize: 13)),
+      ),
+      captionControls: Builder(
+        builder: (context) {
+          return WindowCaption(
+            brightness: FluentTheme.of(context).brightness == Brightness.dark
+              ? Brightness.dark
+              : Brightness.light,
+            backgroundColor: Colors.transparent,
+          );
+        },
+      ),
+      onDragStarted: windowManager.startDragging,
+      onDoubleTap: () async {
+        if (await windowManager.isMaximized()) {
+          await windowManager.restore();
+        } else {
+          await windowManager.maximize();
+        }
+      },
+    );
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: FluentTheme.of(context).scaffoldBackgroundColor,
+      child: super.build(context),
     );
   }
 }
