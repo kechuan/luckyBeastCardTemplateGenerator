@@ -34,6 +34,13 @@ class _FluentExportCardPictureDialogState extends State<FluentExportCardPictureD
   }
 
   @override
+  dispose() {
+    outputImageWidthController.dispose();
+    outputImageHeightController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final appModel = context.read<AppModel>();
 

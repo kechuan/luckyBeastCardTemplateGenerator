@@ -35,6 +35,6 @@
 			"deviceId": "chrome",
 			"program": "lib/main.dart",
 			"flutterMode": "release"
-		}
+		},
 	]
 }

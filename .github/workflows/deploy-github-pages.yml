@@ -28,7 +28,7 @@ jobs:
 
       - run: flutter pub get
 
-      - run: flutter build web --release --base-href "/luckyBeastCardTemplateGenerator/"
+      - run: flutter build web --release --wasm --base-href "/luckyBeastCardTemplateGenerator/"
 
       - uses: actions/configure-pages@v5
 
